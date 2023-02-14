@@ -1,0 +1,5 @@
+require('plugins')
+require('settings')
+require('keymap')
+require('voloyev-tree-sitter')
+require('lsp-config')
