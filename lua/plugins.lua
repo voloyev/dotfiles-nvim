@@ -46,8 +46,6 @@ use 'tpope/vim-rails'
 use 'tpope/vim-surround'
 use 'tpope/vim-endwise'
 
--- use 'junegunn/fzf'
--- use 'junegunn/fzf.vim'
 
 use 'nathanaelkane/vim-indent-guides'
 use 'vimwiki/vimwiki'
@@ -74,19 +72,18 @@ use 'elixir-editors/vim-elixir'
 use 'mhinz/vim-mix-format'
 use 'slashmili/alchemist.vim'
 
-use 'SirVer/ultisnips'
-use 'honza/vim-snippets'
 
 use 'ollykel/v-vim'
-
 use 'fatih/vim-go'
-
 use 'cespare/vim-toml'
-use 'mbbill/undotree'
 use 'zah/nim.vim'
 
+use 'mbbill/undotree'
+
 use 'morhetz/gruvbox'
+
 use 'X3eRo0/dired.nvim'
+
 use {
   'phaazon/hop.nvim',
   branch = 'v2', -- optional but strongly recommended
@@ -104,6 +101,7 @@ use 'hrsh7th/cmp-buffer'
 use 'hrsh7th/cmp-path'
 use 'hrsh7th/cmp-cmdline'
 use 'hrsh7th/nvim-cmp'
+
 use {'nvim-telescope/telescope-fzf-native.nvim', run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
 use 'nvim-treesitter/nvim-treesitter'
 use 'jose-elias-alvarez/null-ls.nvim'
