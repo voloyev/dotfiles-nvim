@@ -5,7 +5,10 @@ use 'MunifTanjim/nui.nvim'
 
 --use 'fxn/vim-monochrome'
 use 'voloyev/vim-monochrome'
-use 'itchyny/lightline.vim'
+use {
+  'nvim-lualine/lualine.nvim',
+  requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+}
 use 'mboughaba/i3config.vim'
 
 use 'scrooloose/nerdtree'
@@ -45,7 +48,7 @@ use 'tpope/vim-bundler'
 use 'tpope/vim-rails'
 use 'tpope/vim-surround'
 use 'tpope/vim-endwise'
-
+use 'tpope/vim-fugitive'
 
 use 'nathanaelkane/vim-indent-guides'
 use 'vimwiki/vimwiki'

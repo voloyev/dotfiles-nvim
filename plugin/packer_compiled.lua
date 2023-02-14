@@ -165,10 +165,10 @@ _G.packer_plugins = {
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/indentpython.vim",
     url = "https://github.com/vim-scripts/indentpython.vim"
   },
-  ["lightline.vim"] = {
+  ["lualine.nvim"] = {
     loaded = true,
-    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/lightline.vim",
-    url = "https://github.com/itchyny/lightline.vim"
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   nerdcommenter = {
     loaded = true,
@@ -214,6 +214,12 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = false,
+    needs_bufread = false,
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/opt/nvim-web-devicons",
+    url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -280,11 +286,6 @@ _G.packer_plugins = {
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/typescript-vim",
     url = "https://github.com/leafgarland/typescript-vim"
   },
-  ultisnips = {
-    loaded = true,
-    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/ultisnips",
-    url = "https://github.com/SirVer/ultisnips"
-  },
   undotree = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/undotree",
@@ -319,6 +320,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/vim-endwise",
     url = "https://github.com/tpope/vim-endwise"
+  },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
   },
   ["vim-go"] = {
     loaded = true,
@@ -374,11 +380,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/vim-ruby",
     url = "https://github.com/vim-ruby/vim-ruby"
-  },
-  ["vim-snippets"] = {
-    loaded = true,
-    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/vim-snippets",
-    url = "https://github.com/honza/vim-snippets"
   },
   ["vim-surround"] = {
     loaded = true,

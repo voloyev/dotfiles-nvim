@@ -102,8 +102,14 @@ vim.g.indent_guides_auto_colors = 0
 vim.g.EasyMotion_do_mapping = 0 -- Disable default mappings
 vim.g.EasyMotion_smartcase = 1
 
+-- lualine
+local lualine = require('lualine')
 
-
+lualine.setup {
+  options = {
+    theme = 'gruvbox'
+  }
+}
 -- Set up nvim-cmp.
   local cmp = require('cmp')
 
