@@ -82,6 +82,7 @@
         "/home/voloyev/.local/share/nvim/site/pack/packer/start/vim-rails/after",
         "/home/voloyev/.local/share/nvim/site/pack/packer/start/vim-yaml/after",
         "/usr/share/vim/vimfiles",
-        "${3rd}/luassert/library"
+        "${3rd}/luassert/library",
+        "${3rd}/luv/library"
     ]
 }

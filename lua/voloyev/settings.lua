@@ -1,13 +1,7 @@
 require('gitsigns').setup()
-require('dired').setup {
-    path_separator = "/",
-    show_banner = false,
-    show_hidden = true,
-    show_colors = true,
-}
 
 HOME = os.getenv("HOME")
-
+-- Set a leader key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 

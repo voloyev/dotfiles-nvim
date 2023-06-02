@@ -1,5 +1,6 @@
 local lspconfig = require('lspconfig')
 local null_ls = require('null-ls')
+
  -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -19,10 +20,10 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', '<leader>gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<leader>K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', '<leader>gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
   vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
@@ -32,11 +33,26 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<leader>gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
 
+lspconfig.zls.setup{
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
+lspconfig.tsserver.setup{
+    on_attach = on_attach,
+    capabilities = capabilities
+}
+
 lspconfig.solargraph.setup{
+    on_attach = on_attach,
+    capabilities = capabilities
+}
+
+lspconfig.zls.setup{
     on_attach = on_attach,
     capabilities = capabilities
 }
@@ -59,7 +75,7 @@ lspconfig.pyright.setup{
     on_attach = on_attach
 }
 
-local path_to_elixirls = vim.fn.expand("~/Applications/elixir-ls/release/language_server.sh")
+local path_to_elixirls = vim.fn.expand("~/workspace/elixir/elixir-ls/release/language_server.sh")
 
 lspconfig.elixirls.setup({
     cmd = {path_to_elixirls},
@@ -70,7 +86,7 @@ lspconfig.elixirls.setup({
             -- I choose to disable dialyzer for personal reasons, but
             -- I would suggest you also disable it unless you are well
             -- aquainted with dialzyer and know how to use it.
-            dialyzerEnabled = false,
+            dialyzerEnabled = true,
             -- I also choose to turn off the auto dep fetching feature.
             -- It often get's into a weird state that requires deleting
             -- the .elixir_ls directory and restarting your editor.
@@ -88,12 +104,6 @@ local rust_opts = {
         -- the hints or just run :RustSetInlayHints.
         -- default: true
         autoSetHints = true,
-
-        -- whether to show hover actions inside the hover window
-        -- this overrides the default hover handler so something like lspsaga.nvim's hover would be overriden by this
-        -- default: true
-        hover_with_actions = true,
-
         -- These apply to the default RustRunnables command
         runnables = {
             -- whether to use telescope for selection menu or not
@@ -192,6 +202,8 @@ lspconfig.lua_ls.setup {
   },
 }
 
+require'lspconfig'.clangd.setup{}
+
 null_ls.setup {
     sources = {
         null_ls.builtins.formatting.stylua,
@@ -206,7 +218,11 @@ null_ls.setup {
         null_ls.builtins.diagnostics.flake8,
         null_ls.builtins.diagnostics.hadolint,
         null_ls.builtins.diagnostics.rubocop,
-        null_ls.builtins.formatting.lua_format
+        null_ls.builtins.diagnostics.eslint,
+        null_ls.builtins.formatting.lua_format,
+        null_ls.builtins.formatting.clang_format,
+        null_ls.builtins.formatting.eslint,
+        null_ls.builtins.diagnostics.clang_check
     }
 }
 
