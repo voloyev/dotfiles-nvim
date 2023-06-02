@@ -124,11 +124,6 @@ _G.packer_plugins = {
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/deoplete.nvim",
     url = "https://github.com/Shougo/deoplete.nvim"
   },
-  ["dired.nvim"] = {
-    loaded = true,
-    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/dired.nvim",
-    url = "https://github.com/X3eRo0/dired.nvim"
-  },
   ["emmet-vim"] = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/emmet-vim",
@@ -225,6 +220,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
+  },
+  playground = {
+    loaded = true,
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/playground",
+    url = "https://github.com/nvim-treesitter/playground"
   },
   ["plenary.nvim"] = {
     loaded = true,
