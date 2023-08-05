@@ -38,11 +38,6 @@ local on_attach = function(client, bufnr)
 	end, bufopts)
 end
 
-lspconfig.zls.setup({
-	on_attach = on_attach,
-	capabilities = capabilities,
-})
-
 lspconfig.tsserver.setup({
 	on_attach = on_attach,
 	capabilities = capabilities,
