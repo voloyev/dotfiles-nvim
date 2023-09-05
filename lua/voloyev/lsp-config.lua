@@ -1,6 +1,6 @@
 local lspconfig = require("lspconfig")
 local null_ls = require("null-ls")
-
+local telescope = require("telescope.builtin")
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
@@ -20,19 +20,19 @@ local on_attach = function(client, bufnr)
 	-- See `:help vim.lsp.*` for documentation on any of the below functions
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
 	vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, bufopts)
-	vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+	vim.keymap.set("n", "gd", telescope.lsp_definitions, bufopts)
 	vim.keymap.set("n", "<leader>K", vim.lsp.buf.hover, bufopts)
-	vim.keymap.set("n", "<leader>gi", vim.lsp.buf.implementation, bufopts)
+	vim.keymap.set("n", "<leader>gi", telescope.lsp_implementations, bufopts)
 	vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
 	vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 	vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
 	vim.keymap.set("n", "<leader>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 	end, bufopts)
-	vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
+	vim.keymap.set("n", "<leader>D", telescope.lsp_type_definitions, bufopts)
 	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-	vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<leader>gr', telescope.lsp_references, bufopts)
 	vim.keymap.set("n", "<leader>F", function()
 		vim.lsp.buf.format({ async = true })
 	end, bufopts)
@@ -201,7 +201,15 @@ lspconfig.lua_ls.setup({
 	},
 })
 
-require("lspconfig").clangd.setup({})
+lspconfig.clangd.setup({})
+lspconfig.nim_langserver.setup{
+  settings = {
+    nim = {
+      nimsuggestPath = "~/.nimble/bin/nimlangserver"
+    }
+  }
+}
+
 
 null_ls.setup({
 	sources = {
