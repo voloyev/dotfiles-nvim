@@ -1,6 +1,9 @@
 require("nvim-treesitter.configs").setup({
 	-- A list of parser names, or "all"
-	ensure_installed = { "c", "ruby", "python", "elixir", "lua", "rust", "lua", "haskell", "javascript", "typescript", "python" },
+	ensure_installed = { 
+    "c", "ruby", "python", "elixir", "lua", "rust",
+    "lua", "haskell", "javascript", "typescript", "python", "ocaml"
+  },
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
@@ -14,4 +17,5 @@ require("nvim-treesitter.configs").setup({
 		enable = true,
 		additional_vim_regex_highlighting = false,
 	},
+  indent = {enable = true}
 })

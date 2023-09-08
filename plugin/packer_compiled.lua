@@ -119,11 +119,6 @@ _G.packer_plugins = {
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/cmp-vsnip",
     url = "https://github.com/hrsh7th/cmp-vsnip"
   },
-  ["deoplete.nvim"] = {
-    loaded = true,
-    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/deoplete.nvim",
-    url = "https://github.com/Shougo/deoplete.nvim"
-  },
   ["emmet-vim"] = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/emmet-vim",
@@ -159,6 +154,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/incsearch.vim",
     url = "https://github.com/haya14busa/incsearch.vim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
   ["indentpython.vim"] = {
     loaded = true,
@@ -204,6 +204,26 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
+  },
+  ["nvim-dap"] = {
+    loaded = true,
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/nvim-dap",
+    url = "https://github.com/mfussenegger/nvim-dap"
+  },
+  ["nvim-dap-go"] = {
+    loaded = true,
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/nvim-dap-go",
+    url = "https://github.com/leoluz/nvim-dap-go"
+  },
+  ["nvim-dap-ui"] = {
+    loaded = true,
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
+    url = "https://github.com/rcarriga/nvim-dap-ui"
+  },
+  ["nvim-dap-virtual-text"] = {
+    loaded = true,
+    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/nvim-dap-virtual-text",
+    url = "https://github.com/theHamsta/nvim-dap-virtual-text"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -335,11 +355,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/vim-go",
     url = "https://github.com/fatih/vim-go"
-  },
-  ["vim-indent-guides"] = {
-    loaded = true,
-    path = "/home/voloyev/.local/share/nvim/site/pack/packer/start/vim-indent-guides",
-    url = "https://github.com/nathanaelkane/vim-indent-guides"
   },
   ["vim-javascript"] = {
     loaded = true,

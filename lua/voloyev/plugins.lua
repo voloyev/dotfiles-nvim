@@ -24,8 +24,6 @@ return require("packer").startup(function(use)
 	use("tpope/vim-markdown")
 	use("townk/vim-autoclose")
 
-	use("Shougo/deoplete.nvim")
-
 	use("vim-syntastic/syntastic")
 	use("tmhedberg/SimpylFold")
 
@@ -48,7 +46,6 @@ return require("packer").startup(function(use)
 	use("tpope/vim-endwise")
 	use("tpope/vim-fugitive")
 
-	use("nathanaelkane/vim-indent-guides")
 	use("vimwiki/vimwiki")
 	use("stephpy/vim-yaml")
 	use("mattn/emmet-vim")
@@ -105,5 +102,9 @@ return require("packer").startup(function(use)
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 	use("nvim-treesitter/playground")
 	use("jose-elias-alvarez/null-ls.nvim")
-  use('ThePrimeagen/harpoon')
+  use("ThePrimeagen/harpoon")
+  use("lukas-reineke/indent-blankline.nvim")
+  use {"rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
+  use("leoluz/nvim-dap-go")
+  use("theHamsta/nvim-dap-virtual-text")
 end)

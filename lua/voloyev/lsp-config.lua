@@ -169,20 +169,21 @@ local rust_opts = {
 require("rust-tools").setup(rust_opts)
 
 lspconfig.lua_ls.setup({
-	capabilities = capabilities,
-	settings = {
-		Lua = {
+  on_init = function(client)
+    local path = client.workspace_folders[1].name
+    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
+		  Lua = {
 			format = {
 				enable = true,
 				-- Put format options here
-				-- NOTE: the value should be STRING!!
+				-- NOTE: the value should be STR:wqING!!
 				defaultConfig = {
 					indent_style = "space",
 					indent_size = "2",
 				},
 			},
 			runtime = {
-				-- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
 				version = "LuaJIT",
 			},
 			diagnostics = {
@@ -196,9 +197,14 @@ lspconfig.lua_ls.setup({
 			-- Do not send telemetry data containing a randomized but unique identifier
 			telemetry = {
 				enable = false,
-			},
-		},
-	},
+			}
+		}
+	})
+
+  client.notify("workspace/didChangeConfiguration", { settings = client.config.settings, capabilities = capabilities})
+    end
+    return true
+  end
 })
 
 lspconfig.clangd.setup({})
@@ -210,6 +216,7 @@ lspconfig.nim_langserver.setup{
   }
 }
 
+lspconfig.ocamllsp.setup{}
 
 null_ls.setup({
 	sources = {
@@ -226,7 +233,6 @@ null_ls.setup({
 		null_ls.builtins.diagnostics.hadolint,
 		null_ls.builtins.diagnostics.rubocop,
 		null_ls.builtins.diagnostics.eslint,
-		null_ls.builtins.formatting.lua_format,
 		null_ls.builtins.formatting.clang_format,
 		null_ls.builtins.formatting.eslint,
 		null_ls.builtins.diagnostics.clang_check,
