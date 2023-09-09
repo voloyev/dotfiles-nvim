@@ -1,110 +1,182 @@
-return require("packer").startup(function(use)
-	use("wbthomason/packer.nvim")
-	use("rstacruz/sparkup")
-	use("MunifTanjim/nui.nvim")
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-	--use 'fxn/vim-monochrome'
-	use("voloyev/vim-monochrome")
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
-	use("mboughaba/i3config.vim")
+require("lazy").setup({
+  "neovim/nvim-lspconfig",
+  "rstacruz/sparkup",
+  "MunifTanjim/nui.nvim",
+  --'fxn/vim-monochrome'
+  --"voloyev/vim-monochrome"
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = { "kyazdani42/nvim-web-devicons", lazy = true }
+  },
+  "mboughaba/i3config.vim",
 
-	use("scrooloose/nerdtree")
-	use("Xuyuanp/nerdtree-git-plugin")
+  "scrooloose/nerdtree",
+  "Xuyuanp/nerdtree-git-plugin",
 
-	use("ervandew/supertab")
-	use("majutsushi/tagbar")
+  "ervandew/supertab",
+  "majutsushi/tagbar",
 
-	use("terryma/vim-multiple-cursors")
-	use("lewis6991/gitsigns.nvim")
-	use("haya14busa/incsearch.vim")
-	use("preservim/nerdcommenter")
-	use("tpope/vim-markdown")
-	use("townk/vim-autoclose")
+  "terryma/vim-multiple-cursors",
+  "lewis6991/gitsigns.nvim",
+  --	"preservim/nerdcommenter",
+  {
+    'numToStr/Comment.nvim',
+    opts = {
+      -- add any options here
+    },
+    lazy = false,
+  },
+  "tpope/vim-markdown",
 
-	use("vim-syntastic/syntastic")
-	use("tmhedberg/SimpylFold")
 
-	-- rust related
-	use("rust-lang/rust.vim")
-	use("neovim/nvim-lspconfig")
-	use("simrat39/rust-tools.nvim")
+  -- rust related
+  "rust-lang/rust.vim",
+  "simrat39/rust-tools.nvim",
 
-	-- telescope
-	use({ "nvim-telescope/telescope.nvim", requires = { { "nvim-lua/plenary.nvim" } } })
-	-- Optional dependencies for telescope
-	use("nvim-lua/popup.nvim")
-	use("nvim-lua/plenary.nvim")
+  -- telescope
+  {
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" }
+  },
+  -- Optional dependencies for telescope
+  "nvim-lua/popup.nvim",
+  "nvim-lua/plenary.nvim",
+  "nvim-telescope/telescope-file-browser.nvim",
+  -- Ruby and Rails
+  "vim-ruby/vim-ruby",
+  "tpope/vim-bundler",
+  "tpope/vim-rails",
+  "tpope/vim-endwise",
+  "tpope/vim-fugitive",
 
-	-- Ruby and Rails
-	use("vim-ruby/vim-ruby")
-	use("tpope/vim-bundler")
-	use("tpope/vim-rails")
-	use("tpope/vim-surround")
-	use("tpope/vim-endwise")
-	use("tpope/vim-fugitive")
+  "stephpy/vim-yaml",
+  "mattn/emmet-vim",
 
-	use("vimwiki/vimwiki")
-	use("stephpy/vim-yaml")
-	use("mattn/emmet-vim")
+  -- Javascript
+  "pangloss/vim-javascript",
+  "leafgarland/typescript-vim",
+  "maxmellon/vim-jsx-pretty",
+  "prettier/vim-prettier",
 
-	-- Javascript
-	use("pangloss/vim-javascript")
-	use("leafgarland/typescript-vim")
-	use("maxmellon/vim-jsx-pretty")
-	use("prettier/vim-prettier")
+  -- python
+  "python-mode/python-mode",
+  "vim-scripts/indentpython.vim",
+  "jmcantrell/vim-virtualenv",
+  "psf/black",
 
-	-- python
-	use("python-mode/python-mode")
-	use("vim-scripts/indentpython.vim")
-	use("jmcantrell/vim-virtualenv")
-	use("psf/black")
+  "mileszs/ack.vim",
+  "rhysd/vim-crystal",
 
-	use("mileszs/ack.vim")
-	use("rhysd/vim-crystal")
+  -- Elixir
+  "elixir-editors/vim-elixir",
+  "mhinz/vim-mix-format",
+  "slashmili/alchemist.vim",
 
-	-- Elixir
-	use("elixir-editors/vim-elixir")
-	use("mhinz/vim-mix-format")
-	use("slashmili/alchemist.vim")
+  "ollykel/v-vim",
+  "fatih/vim-go",
+  "cespare/vim-toml",
+  "zah/nim.vim",
 
-	use("ollykel/v-vim")
-	use("fatih/vim-go")
-	use("cespare/vim-toml")
-	use("zah/nim.vim")
+  "mbbill/undotree",
+  { "ellisonleao/gruvbox.nvim", priority = 1000 },
+  {
+    "phaazon/hop.nvim",
+    branch = "v2", -- optional but strongly recommended
+    config = function()
+      require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+    end,
+  },
 
-	use("mbbill/undotree")
-	use("morhetz/gruvbox")
+  "hrsh7th/cmp-vsnip",
+  "hrsh7th/vim-vsnip",
+  "hrsh7th/cmp-nvim-lsp",
+  "hrsh7th/cmp-buffer",
+  "hrsh7th/cmp-path",
+  "hrsh7th/cmp-cmdline",
+  "hrsh7th/nvim-cmp",
+  {
+    'nvim-telescope/telescope-fzf-native.nvim',
+    build =
+    'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate"
+  },
+  "nvim-treesitter/playground",
+  "jose-elias-alvarez/null-ls.nvim",
+  "ThePrimeagen/harpoon",
+  "lukas-reineke/indent-blankline.nvim",
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = { "mfussenegger/nvim-dap" }
+  },
+  "leoluz/nvim-dap-go",
+  "theHamsta/nvim-dap-virtual-text",
+  {
+    "kylechui/nvim-surround",
+    version = "*", -- Use for stability; omit to use `main` branch for the latest features
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  },
+  "mhartington/formatter.nvim",
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {} -- this is equalent to setup({}) function
+  },
+  "RRethy/nvim-treesitter-endwise"
+})
 
-	use({
-		"phaazon/hop.nvim",
-		branch = "v2", -- optional but strongly recommended
-		config = function()
-			-- you can configure Hop the way you like here; see :h hop-config
-			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-		end,
-	})
+require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+require('Comment').setup()
+require("nvim-treesitter.configs").setup({
+  -- A list of parser names, or "all"
+  ensure_installed = {
+    "c", "ruby", "python", "elixir", "lua", "rust",
+    "lua", "haskell", "javascript", "typescript", "python", "ocaml", "html", "svelte"
+  },
+  sync_install = false,
 
-	use("hrsh7th/cmp-vsnip")
-	use("hrsh7th/vim-vsnip")
-	use("hrsh7th/cmp-nvim-lsp")
-	use("hrsh7th/cmp-buffer")
-	use("hrsh7th/cmp-path")
-	use("hrsh7th/cmp-cmdline")
-	use("hrsh7th/nvim-cmp")
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
 
-	use({
-		"nvim-telescope/telescope-fzf-native.nvim",
-		run = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
-	})
-	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
-	use("nvim-treesitter/playground")
-	use("jose-elias-alvarez/null-ls.nvim")
-  use("ThePrimeagen/harpoon")
-  use("lukas-reineke/indent-blankline.nvim")
-  use {"rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"}}
-  use("leoluz/nvim-dap-go")
-  use("theHamsta/nvim-dap-virtual-text")
-end)
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+  indent = { enable = true }
+})
+
+require("formatter").setup({
+  logging = true,
+  --  filetype = {
+  --    require("formatter.filetypes.html").prettier
+  --  }
+})
+
+require("telescope").load_extension("file_browser")
+require('nvim-treesitter.configs').setup {
+  endwise = {
+    enable = true,
+  },
+}
