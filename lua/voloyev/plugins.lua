@@ -173,8 +173,15 @@ require("formatter").setup({
   --    require("formatter.filetypes.html").prettier
   --  }
 })
-
-require("telescope").load_extension("file_browser")
+local telescope = require("telescope")
+telescope.setup({
+  extensions = {
+    file_browser = {
+      grouped = true
+    }
+  }
+})
+telescope.load_extension("file_browser")
 require('nvim-treesitter.configs').setup {
   endwise = {
     enable = true,
