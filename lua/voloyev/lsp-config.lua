@@ -72,10 +72,10 @@ lspconfig.pyright.setup({
   capabilities = capabilities,
 })
 
-local path_to_elixirls = vim.fn.expand("~/workspace/elixir/elixir-ls/release/language_server.sh")
+local elixirlsp_cmd = "elixir_language_server.sh"
 
 lspconfig.elixirls.setup({
-  cmd = { path_to_elixirls },
+  cmd = { elixirlsp_cmd },
   capabilities = capabilities,
   on_attach = on_attach,
   settings = {
