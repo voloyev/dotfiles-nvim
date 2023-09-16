@@ -136,13 +136,16 @@ require("lazy").setup({
       })
     end
   },
-  "mhartington/formatter.nvim",
   {
     'windwp/nvim-autopairs',
     event = "InsertEnter",
     opts = {} -- this is equalent to setup({}) function
   },
-  "RRethy/nvim-treesitter-endwise"
+  "RRethy/nvim-treesitter-endwise",
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  }
 })
 
 require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
@@ -167,12 +170,6 @@ require("nvim-treesitter.configs").setup({
   indent = { enable = true }
 })
 
-require("formatter").setup({
-  logging = true,
-  --  filetype = {
-  --    require("formatter.filetypes.html").prettier
-  --  }
-})
 local telescope = require("telescope")
 telescope.setup({
   extensions = {
@@ -187,3 +184,16 @@ require('nvim-treesitter.configs').setup {
     enable = true,
   },
 }
+
+require("conform").setup({
+  formatters_by_ft = {
+    lua = { "stylua" },
+    -- Conform will run multiple formatters sequentially
+    python = { "isort", "black" },
+    -- Use a sub-list to run only the first available formatter
+    javascript = { "eslint" },
+    ruby = { "rubocop" },
+    go = { "gofmt" }
+  },
+})
+

@@ -1,1 +1,1 @@
-require('voloyev')
+require("voloyev")
