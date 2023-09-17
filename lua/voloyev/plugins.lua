@@ -145,7 +145,18 @@ require("lazy").setup({
   {
     'stevearc/conform.nvim',
     opts = {},
-  }
+  },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+  "sindrets/diffview.nvim",
+  "nvim-treesitter/nvim-treesitter-context"
 })
 
 require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
@@ -196,4 +207,3 @@ require("conform").setup({
     go = { "gofmt" }
   },
 })
-
