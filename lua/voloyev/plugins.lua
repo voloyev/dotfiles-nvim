@@ -142,6 +142,7 @@ require("lazy").setup({
     opts = {} -- this is equalent to setup({}) function
   },
   "RRethy/nvim-treesitter-endwise",
+  "slim-template/vim-slim",
   {
     'stevearc/conform.nvim',
     opts = {},
