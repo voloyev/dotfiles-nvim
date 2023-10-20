@@ -119,7 +119,10 @@ require("lazy").setup({
   "nvim-treesitter/playground",
   "jose-elias-alvarez/null-ls.nvim",
   "ThePrimeagen/harpoon",
-  "lukas-reineke/indent-blankline.nvim",
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+  },
   {
     "rcarriga/nvim-dap-ui",
     dependencies = { "mfussenegger/nvim-dap" }
@@ -157,7 +160,17 @@ require("lazy").setup({
     }
   },
   "sindrets/diffview.nvim",
-  "nvim-treesitter/nvim-treesitter-context"
+  "nvim-treesitter/nvim-treesitter-context",
+  {
+    "NeogitOrg/neogit",
+    dependencies = {
+      "nvim-lua/plenary.nvim",         -- required
+      "nvim-telescope/telescope.nvim", -- optional
+      "sindrets/diffview.nvim",        -- optional
+      "ibhagwan/fzf-lua",              -- optional
+    },
+    config = true
+  }
 })
 
 require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })

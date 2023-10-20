@@ -71,7 +71,13 @@ lspconfig.pyright.setup({
   on_attach = on_attach,
   capabilities = capabilities,
 })
-
+--
+-- require("elixir").setup({
+--   nextls = {enable = false},
+--   credo = {enable = true},
+--   elixirls = {enable = true},
+-- })
+--
 local elixirlsp_cmd = "elixir_language_server.sh"
 
 lspconfig.elixirls.setup({
@@ -181,6 +187,7 @@ lspconfig.clangd.setup({
   on_attach = on_attach,
   capabilities = capabilities,
 })
+
 lspconfig.nim_langserver.setup({
   on_attach = on_attach,
   capabilities = capabilities,
@@ -200,6 +207,21 @@ lspconfig.ocamllsp.setup({
 lspconfig.svelte.setup({
   on_attach = on_attach,
   capabilities = capabilities,
+})
+
+
+lspconfig.emmet_ls.setup({
+    -- on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
+    init_options = {
+      html = {
+        options = {
+          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+          ["bem.enabled"] = true,
+        },
+      },
+    }
 })
 --
 -- null_ls.setup({
