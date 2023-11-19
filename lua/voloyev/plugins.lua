@@ -58,11 +58,16 @@ require("lazy").setup({
   -- Ruby and Rails
   "vim-ruby/vim-ruby",
   "tpope/vim-bundler",
-  "tpope/vim-rails",
-  "tpope/vim-endwise",
+  {
+    "tpope/vim-rails",
+    config = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "eruby.yaml",
+        command = "set filetype=yaml",
+      })
+    end
+  },
   "tpope/vim-fugitive",
-
-  "stephpy/vim-yaml",
   "mattn/emmet-vim",
 
   -- Javascript
@@ -92,6 +97,7 @@ require("lazy").setup({
 
   "mbbill/undotree",
   { "ellisonleao/gruvbox.nvim", priority = 1000 },
+  "rebelot/kanagawa.nvim",
   {
     "phaazon/hop.nvim",
     branch = "v2", -- optional but strongly recommended
@@ -179,7 +185,7 @@ require("nvim-treesitter.configs").setup({
   -- A list of parser names, or "all"
   ensure_installed = {
     "c", "ruby", "python", "elixir", "lua", "rust",
-    "lua", "haskell", "javascript", "typescript", "python", "ocaml", "html", "svelte"
+    "lua", "haskell", "javascript", "typescript", "python", "ocaml", "html", "svelte", 'yaml'
   },
   sync_install = false,
 
@@ -192,8 +198,13 @@ require("nvim-treesitter.configs").setup({
     enable = true,
     additional_vim_regex_highlighting = false,
   },
-  indent = { enable = true }
+  indent = { enable = true },
+  endwise = {
+    enable = true,
+  },
+
 })
+
 
 local telescope = require("telescope")
 telescope.setup({
@@ -204,12 +215,6 @@ telescope.setup({
   }
 })
 telescope.load_extension("file_browser")
-require('nvim-treesitter.configs').setup {
-  endwise = {
-    enable = true,
-  },
-}
-
 require("conform").setup({
   formatters_by_ft = {
     lua = { "stylua" },
