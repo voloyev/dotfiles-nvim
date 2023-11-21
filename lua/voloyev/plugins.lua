@@ -15,8 +15,10 @@ require("lazy").setup({
   "neovim/nvim-lspconfig",
   "rstacruz/sparkup",
   "MunifTanjim/nui.nvim",
+  -- themes
   --'fxn/vim-monochrome'
   --"voloyev/vim-monochrome"
+  { "ellisonleao/gruvbox.nvim", priority = 1000 },
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "kyazdani42/nvim-web-devicons", lazy = true }
@@ -96,8 +98,7 @@ require("lazy").setup({
   "zah/nim.vim",
 
   "mbbill/undotree",
-  { "ellisonleao/gruvbox.nvim", priority = 1000 },
-  "rebelot/kanagawa.nvim",
+
   {
     "phaazon/hop.nvim",
     branch = "v2", -- optional but strongly recommended

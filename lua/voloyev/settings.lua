@@ -6,7 +6,7 @@ vim.opt.mouse = "a"
 vim.opt.showmode = false
 vim.opt.showmatch = true
 vim.opt.background = "dark"
-vim.cmd([[colorscheme kanagawa-wave]])
+vim.cmd([[colorscheme gruvbox]])
 
 -- basic settings
 vim.opt.encoding = "utf-8"
@@ -69,7 +69,7 @@ vim.opt.termguicolors = true
 -- lualine
 require("lualine").setup({
   options = {
-    theme = "gruvbox",
+    theme = "auto",
   },
 })
 
