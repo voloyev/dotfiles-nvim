@@ -79,10 +79,7 @@ require("lazy").setup({
   "prettier/vim-prettier",
 
   -- python
-  "python-mode/python-mode",
-  "vim-scripts/indentpython.vim",
   "jmcantrell/vim-virtualenv",
-  "psf/black",
 
   "mileszs/ack.vim",
   "rhysd/vim-crystal",
