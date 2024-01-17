@@ -33,7 +33,8 @@ vim.opt.showbreak = "↪" -- character to show when line is broken
 -- Sidebar
 vim.opt.number = true      -- line number on the left
 vim.opt.numberwidth = 3    -- always reserve 3 spaces for line number
-vim.opt.signcolumn = "yes" -- keep 1 column for coc.vim  check
+vim.opt.relativenumber = true
+vim.opt.signcolumn = "number" -- keep 1 column for coc.vim  check
 vim.opt.modelines = 0
 vim.opt.showcmd = true     -- display command in bottom bar
 
@@ -66,31 +67,4 @@ vim.opt.undofile = true
 vim.opt.cursorline = true
 
 vim.opt.termguicolors = true
--- lualine
-require("lualine").setup({
-  options = {
-    theme = "auto",
-  },
-})
 
-
-require("ibl").setup()
-  -- for example, context is off by default, use this to turn it on
- -- show_current_context = true,
-  --show_current_context_start = true,
-  --char_highlight_list = {"IndentBlanklineIndent1"}
-
-local hop = require('hop')
-local directions = require('hop.hint').HintDirection
-vim.keymap.set('n', '<leader>hf', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-end, { remap = true })
-vim.keymap.set('', '<leader>hF', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-end, { remap = true })
-vim.keymap.set('', '<leader>ht', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, { remap = true })
-vim.keymap.set('', '<leader>hT', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-end, { remap = true })

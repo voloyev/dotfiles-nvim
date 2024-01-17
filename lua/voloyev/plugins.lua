@@ -15,7 +15,14 @@ require("lazy").setup({
   "neovim/nvim-lspconfig",
   "williamboman/mason.nvim",
   "williamboman/mason-lspconfig.nvim",
-  "rstacruz/sparkup",
+  {
+    "jay-babu/mason-null-ls.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls.nvim",
+    },
+  },
   "MunifTanjim/nui.nvim",
   -- themes
   --'fxn/vim-monochrome'
@@ -35,24 +42,26 @@ require("lazy").setup({
 
   "terryma/vim-multiple-cursors",
   "lewis6991/gitsigns.nvim",
-  --	"preservim/nerdcommenter",
   {
     'numToStr/Comment.nvim',
-    opts = {
-      -- add any options here
-    },
-    lazy = false,
+    opts = {}
   },
   "tpope/vim-markdown",
 
 
   -- rust related
-  "rust-lang/rust.vim",
 
   -- telescope
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" }
+    dependencies = { "nvim-lua/plenary.nvim" },
+    opts = {
+      extensions = {
+        file_browser = {
+          grouped = true
+        }
+      }
+    }
   },
   -- Optional dependencies for telescope
   "nvim-lua/popup.nvim",
@@ -70,43 +79,34 @@ require("lazy").setup({
       })
     end
   },
-  "tpope/vim-fugitive",
-  "mattn/emmet-vim",
-
   -- Javascript
-  "pangloss/vim-javascript",
-  "leafgarland/typescript-vim",
-  "maxmellon/vim-jsx-pretty",
-  "prettier/vim-prettier",
-
   -- python
   "jmcantrell/vim-virtualenv",
 
-  "mileszs/ack.vim",
-  "rhysd/vim-crystal",
 
   -- Elixir
+  "rust-lang/rust.vim",
+  "pangloss/vim-javascript",
+  "leafgarland/typescript-vim",
   "elixir-editors/vim-elixir",
-  "mhinz/vim-mix-format",
-  "slashmili/alchemist.vim",
-
   "ollykel/v-vim",
   "fatih/vim-go",
   "cespare/vim-toml",
   "zah/nim.vim",
+  "slim-template/vim-slim",
+  "joerdav/templ.vim",
+  "rhysd/vim-crystal",
 
   "mbbill/undotree",
-
+  "tpope/vim-fugitive",
+  "mattn/emmet-vim",
   {
     "phaazon/hop.nvim",
     branch = "v2", -- optional but strongly recommended
-    config = function()
-      require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-    end,
+    opts = { keys = "etovxqpdygfblzhckisuran" }
   },
-
-  "hrsh7th/cmp-vsnip",
-  "hrsh7th/vim-vsnip",
+  "L3MON4D3/LuaSnip",
+  "saadparwaiz1/cmp_luasnip",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
@@ -119,10 +119,9 @@ require("lazy").setup({
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate"
+    build = ":TSUpdate",
   },
   "nvim-treesitter/playground",
-  "jose-elias-alvarez/null-ls.nvim",
   "ThePrimeagen/harpoon",
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -150,18 +149,19 @@ require("lazy").setup({
     opts = {} -- this is equalent to setup({}) function
   },
   "RRethy/nvim-treesitter-endwise",
-  "slim-template/vim-slim",
-  {
-    'stevearc/conform.nvim',
-    opts = {},
-  },
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
+      formatters_by_ft = {
+        lua = { "stylua" },
+        -- Conform will run multiple formatters sequentially
+        python = { "isort", "black" },
+        -- Use a sub-list to run only the first available formatter
+        javascript = { "eslint" },
+        ruby = { "rubocop" },
+        go = { "gofmt" }
+      },
     }
   },
   "sindrets/diffview.nvim",
@@ -176,54 +176,39 @@ require("lazy").setup({
     },
     config = true
   },
-  'mfussenegger/nvim-lint',
   'nvimtools/none-ls.nvim',
-})
-
-require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
-require('Comment').setup()
-require("nvim-treesitter.configs").setup({
-  -- A list of parser names, or "all"
-  ensure_installed = {
-    "c", "ruby", "python", "elixir", "lua", "rust",
-    "lua", "haskell", "javascript", "typescript", "python", "ocaml", "html", "svelte", 'yaml'
-  },
-  sync_install = false,
-
-  -- Automatically install missing parsers when entering buffer
-  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-  auto_install = true,
-
-  highlight = {
-    -- `false` will disable the whole extension
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  indent = { enable = true },
-  endwise = {
-    enable = true,
-  },
-
-})
-
-
-local telescope = require("telescope")
-telescope.setup({
-  extensions = {
-    file_browser = {
-      grouped = true
-    }
-  }
-})
-telescope.load_extension("file_browser")
-require("conform").setup({
-  formatters_by_ft = {
-    lua = { "stylua" },
-    -- Conform will run multiple formatters sequentially
-    python = { "isort", "black" },
-    -- Use a sub-list to run only the first available formatter
-    javascript = { "eslint" },
-    ruby = { "rubocop" },
-    go = { "gofmt" }
+  {
+    "folke/trouble.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {}
   },
 })
+
+
+require("telescope").load_extension("file_browser")
+require("lualine").setup({
+  options = {
+    theme = "everforest",
+    section_separators = '',
+    component_separators = '',
+  },
+})
+
+
+require("ibl").setup({})
+
+
+local hop = require('hop')
+local directions = require('hop.hint').HintDirection
+vim.keymap.set('n', '<leader>hf', function()
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set('', '<leader>hF', function()
+  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set('', '<leader>ht', function()
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+end, { remap = true })
+vim.keymap.set('', '<leader>hT', function()
+  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+end, { remap = true })

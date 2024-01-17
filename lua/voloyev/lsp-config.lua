@@ -1,19 +1,46 @@
+require("mason").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd", "solargraph", "gopls", "zls", "templ", "svelte" },
+})
+
 local lspconfig = require("lspconfig")
 local telescope = require("telescope.builtin")
+local trouble = require("trouble")
 local null_ls = require("null-ls")
 
-require("mason").setup()
-require("mason-lspconfig").setup {
-  ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd", "solargraph", "gopls", "zls" },
-}
+null_ls.setup({
+  sources = {
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.code_actions.shellcheck,
+    null_ls.builtins.diagnostics.credo,
+    null_ls.builtins.diagnostics.erb_lint,
+    null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.rubocop,
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.diagnostics.clang_check,
+  },
+})
 
-lspconfig.pyright.setup()
-lspconfig.clangd.setup()
-lspconfig.tsserver.setup()
-lspconfig.solargraph.setup()
-lspconfig.zls.setup()
-lspconfig.ocamllsp.setup()
-lspconfig.svelte.setup()
+require("mason-null-ls").setup({
+    ensure_installed = nil,
+    automatic_installation = true,
+})
+
+lspconfig.pyright.setup({})
+lspconfig.clangd.setup({})
+lspconfig.tsserver.setup({})
+lspconfig.solargraph.setup({})
+lspconfig.zls.setup({})
+lspconfig.ocamllsp.setup({})
+lspconfig.svelte.setup({})
+lspconfig.templ.setup({})
+vim.filetype.add({ extension = { templ = "templ" } })
+lspconfig.tailwindcss.setup({
+    filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+    init_options = { userLanguages = { templ = "html" } },
+})
+
 lspconfig.emmet_ls.setup({
   filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
   init_options = {
@@ -34,6 +61,7 @@ lspconfig.gopls.setup({
         unusedparams = true,
       },
       staticcheck = true,
+      gofumpt = true,
     },
   },
 })
@@ -53,18 +81,34 @@ lspconfig.nim_langserver.setup({
 --   elixirls = {enable = true},
 -- })
 --
-local elixirlsp_cmd = "elixir_language_server.sh"
-lspconfig.elixirls.setup({
-  cmd = { elixirlsp_cmd },
-  settings = {
-    elixirLS = {
-      dialyzerEnabled = true,
-      fetchDeps = false,
-    },
-  },
+-- local elixirlsp_cmd = "elixir_language_server.sh"
+--
+-- lspconfig.elixirls.setup({
+--   cmd = { elixirlsp_cmd },
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   settings = {
+--     elixirLS = {
+--       -- I choose to disable dialyzer for personal reasons, but
+--       -- I would suggest you also disable it unless you are well
+--       -- aquainted with dialzyer and know how to use it.
+--       dialyzerEnabled = true,
+--       -- I also choose to turn off the auto dep fetching feature.
+--       -- It often get's into a weird state that requires deleting
+--       -- the .elixir_ls directory and restarting your editor.
+--       fetchDeps = false,
+--     },
+--   },
+-- })
+--
+--
+local lexical_cmd = "~/Applications/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
+lspconfig.lexical.setup({
+  cmd = { lexical_cmd },
+  settings = {},
 })
 
-lspconfig.rust_analyzer.setup{
+lspconfig.rust_analyzer.setup({
   settings = {
     ['rust-analyzer'] = {
       diagnostics = {
@@ -72,7 +116,8 @@ lspconfig.rust_analyzer.setup{
       }
     }
   }
-}
+})
+
 lspconfig.lua_ls.setup({
   on_init = function(client)
     local path = client.workspace_folders[1].name
@@ -80,11 +125,8 @@ lspconfig.lua_ls.setup({
       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
         Lua = {
           runtime = {
-            -- Tell the language server which version of Lua you're using
-            -- (most likely LuaJIT in the case of Neovim)
             version = 'LuaJIT'
           },
-          -- Make the server aware of Neovim runtime files
           workspace = {
             checkThirdParty = false,
             library = {
@@ -92,8 +134,6 @@ lspconfig.lua_ls.setup({
               -- "${3rd}/luv/library"
               -- "${3rd}/busted/library",
             }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
           }
         }
       })
@@ -103,7 +143,6 @@ lspconfig.lua_ls.setup({
     return true
   end
 })
-
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
 vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float, opts)
@@ -140,6 +179,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, bufopts)
   end
 })
+
+
+-- TODO: Trouble keymap
+vim.keymap.set("n", "<leader>xx", function() trouble.toggle() end)
+vim.keymap.set("n", "<leader>xw", function() trouble.toggle("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>xd", function() trouble.toggle("document_diagnostics") end)
+vim.keymap.set("n", "<leader>xq", function() trouble.toggle("quickfix") end)
+vim.keymap.set("n", "<leader>xl", function() trouble.toggle("loclist") end)
+
+
 -- require('lint').linters_by_ft = {
 --   markdown = { 'vale', },
 --   typescript = { 'eslint', },
@@ -147,6 +196,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 --   ruby = { 'rubocop', },
 --   elixir = { 'credo', },
 -- }
+
 --
 -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 --   callback = function()
@@ -154,16 +204,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
 --   end,
 -- })
 --
-null_ls.setup({
-  sources = {
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.code_actions.shellcheck,
-    null_ls.builtins.diagnostics.credo,
-    null_ls.builtins.diagnostics.erb_lint,
-    null_ls.builtins.diagnostics.flake8,
-    null_ls.builtins.diagnostics.hadolint,
-    null_ls.builtins.diagnostics.rubocop,
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.diagnostics.clang_check,
-  },
-})
+

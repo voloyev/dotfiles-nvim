@@ -1,7 +1,6 @@
 local telescope = require("telescope.builtin")
 local hop = require("hop")
 local directions = require("hop.hint").HintDirection
-local conform = require("conform")
 -- sane regexes
 --vim.keymap.set("n",'/', '/\\v')
 --vim.keymap.set("v",'/', '/\\v')
@@ -98,5 +97,3 @@ vim.keymap.set(
   ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
   { noremap = true }
 )
-
-vim.keymap.set("n", "<leader>bf", conform.format)
