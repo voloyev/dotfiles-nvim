@@ -13,6 +13,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
   "neovim/nvim-lspconfig",
+  "williamboman/mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
   "rstacruz/sparkup",
   "MunifTanjim/nui.nvim",
   -- themes
@@ -174,7 +176,9 @@ require("lazy").setup({
       "ibhagwan/fzf-lua",              -- optional
     },
     config = true
-  }
+  },
+  'mfussenegger/nvim-lint',
+  'nvimtools/none-ls.nvim',
 })
 
 require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })

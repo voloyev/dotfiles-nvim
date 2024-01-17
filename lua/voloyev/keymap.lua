@@ -55,9 +55,8 @@ vim.keymap.set("n", "ss", "<C-w>s")
 vim.opt.splitbelow = true -- when splitting horizontally, move coursor to lower pane
 vim.opt.splitright = true -- when splitting vertically, mnove coursor to right pane
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv'")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv'")
-
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- PLUGINS
 
 -- git

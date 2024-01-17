@@ -1,61 +1,32 @@
 local lspconfig = require("lspconfig")
 local telescope = require("telescope.builtin")
+local null_ls = require("null-ls")
 
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+require("mason").setup()
+require("mason-lspconfig").setup {
+  ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd", "solargraph", "gopls", "zls" },
+}
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  --vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set("n", "gd", telescope.lsp_definitions, bufopts)
-  vim.keymap.set("n", "<leader>K", vim.lsp.buf.hover, bufopts)
-  vim.keymap.set("n", "<leader>gi", telescope.lsp_implementations, bufopts)
-  vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set("n", "<leader>wl", function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set("n", "<leader>D", telescope.lsp_type_definitions, bufopts)
-  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', '<leader>gr', telescope.lsp_references, bufopts)
-  vim.keymap.set("n", "<leader>F", function()
-    vim.lsp.buf.format({ async = true })
-  end, bufopts)
-end
-
-lspconfig.tsserver.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-lspconfig.solargraph.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-lspconfig.zls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+lspconfig.pyright.setup()
+lspconfig.clangd.setup()
+lspconfig.tsserver.setup()
+lspconfig.solargraph.setup()
+lspconfig.zls.setup()
+lspconfig.ocamllsp.setup()
+lspconfig.svelte.setup()
+lspconfig.emmet_ls.setup({
+  filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
+  init_options = {
+    html = {
+      options = {
+        -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+        ["bem.enabled"] = true,
+      },
+    },
+  }
 })
 
 lspconfig.gopls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
   cmd = { "gopls", "serve" },
   settings = {
     gopls = {
@@ -67,10 +38,14 @@ lspconfig.gopls.setup({
   },
 })
 
-lspconfig.pyright.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+lspconfig.nim_langserver.setup({
+  settings = {
+    nim = {
+      nimsuggestPath = "~/.nimble/bin/nimlangserver"
+    }
+  }
 })
+
 --
 -- require("elixir").setup({
 --   nextls = {enable = false},
@@ -79,27 +54,17 @@ lspconfig.pyright.setup({
 -- })
 --
 local elixirlsp_cmd = "elixir_language_server.sh"
-
 lspconfig.elixirls.setup({
   cmd = { elixirlsp_cmd },
-  capabilities = capabilities,
-  on_attach = on_attach,
   settings = {
     elixirLS = {
-      -- I choose to disable dialyzer for personal reasons, but
-      -- I would suggest you also disable it unless you are well
-      -- aquainted with dialzyer and know how to use it.
       dialyzerEnabled = true,
-      -- I also choose to turn off the auto dep fetching feature.
-      -- It often get's into a weird state that requires deleting
-      -- the .elixir_ls directory and restarting your editor.
       fetchDeps = false,
     },
   },
 })
 
 local rust_opts = {
-  on_attach = on_attach,
   tools = { -- rust-tools options
     autoSetHints = true,
     runnables = {
@@ -131,116 +96,102 @@ local rust_opts = {
       auto_focus = false,
     },
   },
-
-  server = {
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }, -- rust-analyer options
 }
 
 --require('rust-tools.inlay_hints').toggle_inlay_hints()
 require("rust-tools").setup(rust_opts)
 
-lspconfig.lua_ls.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+require'lspconfig'.lua_ls.setup({
   on_init = function(client)
     local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
+    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
         Lua = {
-          format = {
-            enable = true,
-            -- Put format options here
-            -- NOTE: the value should be STR:wqING!!
-            defaultConfig = {
-              indent_style = "space",
-              indent_size = "2",
-            },
-          },
           runtime = {
-            version = "LuaJIT",
+            -- Tell the language server which version of Lua you're using
+            -- (most likely LuaJIT in the case of Neovim)
+            version = 'LuaJIT'
           },
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = { "vim" },
-          },
+          -- Make the server aware of Neovim runtime files
           workspace = {
-            -- Make the server aware of Neovim runtime files
-            library = vim.api.nvim_get_runtime_file("", true),
-          },
-          -- Do not send telemetry data containing a randomized but unique identifier
-          telemetry = {
-            enable = false,
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME
+              -- "${3rd}/luv/library"
+              -- "${3rd}/busted/library",
+            }
+            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
+            -- library = vim.api.nvim_get_runtime_file("", true)
           }
         }
       })
 
-      client.notify("workspace/didChangeConfiguration",
-        { settings = client.config.settings, capabilities = capabilities })
+      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
     end
     return true
   end
 })
 
-lspconfig.clangd.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set("n", "gd", telescope.lsp_definitions, bufopts)
+    vim.keymap.set("n", "<leader>K", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "<leader>gi", telescope.lsp_implementations, bufopts)
+    vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+    vim.keymap.set("n", "<leader>wl", function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, bufopts)
+    vim.keymap.set("n", "<leader>D", telescope.lsp_type_definitions, bufopts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set('n', '<leader>gr', telescope.lsp_references, bufopts)
+    vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set("n", "<leader>F", function()
+      vim.lsp.buf.format({ async = true })
+    end, bufopts)
+  end
 })
-
-lspconfig.nim_langserver.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    nim = {
-      nimsuggestPath = "~/.nimble/bin/nimlangserver"
-    }
-  }
-})
-
-lspconfig.ocamllsp.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-
-lspconfig.svelte.setup({
-  on_attach = on_attach,
-  capabilities = capabilities,
-})
-
-
-lspconfig.emmet_ls.setup({
-    -- on_attach = on_attach,
-    capabilities = capabilities,
-    filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
-    init_options = {
-      html = {
-        options = {
-          -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-          ["bem.enabled"] = true,
-        },
-      },
-    }
-})
+-- require('lint').linters_by_ft = {
+--   markdown = { 'vale', },
+--   typescript = { 'eslint', },
+--   javascript = { 'eslint', },
+--   ruby = { 'rubocop', },
+--   elixir = { 'credo', },
+-- }
 --
--- null_ls.setup({
--- 	sources = {
--- 		null_ls.builtins.formatting.stylua,
--- 		null_ls.builtins.diagnostics.eslint,
--- 		null_ls.builtins.completion.spell,
--- 		null_ls.builtins.code_actions.shellcheck,
--- 		null_ls.builtins.code_actions.eslint,
--- 		null_ls.builtins.code_actions.gitsigns,
--- 		null_ls.builtins.code_actions.xo,
--- 		null_ls.builtins.diagnostics.credo,
--- 		null_ls.builtins.diagnostics.erb_lint,
--- 		null_ls.builtins.diagnostics.flake8,
--- 		null_ls.builtins.diagnostics.hadolint,
--- 		null_ls.builtins.diagnostics.rubocop,
--- 		null_ls.builtins.diagnostics.eslint,
--- 		null_ls.builtins.formatting.clang_format,
--- 		null_ls.builtins.formatting.eslint,
--- 		null_ls.builtins.diagnostics.clang_check,
--- 	},
+-- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+--   callback = function()
+--     require("lint").try_lint()
+--   end,
 -- })
+--
+null_ls.setup({
+  sources = {
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.code_actions.shellcheck,
+    null_ls.builtins.diagnostics.credo,
+    null_ls.builtins.diagnostics.erb_lint,
+    null_ls.builtins.diagnostics.flake8,
+    null_ls.builtins.diagnostics.hadolint,
+    null_ls.builtins.diagnostics.rubocop,
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.diagnostics.clang_check,
+  },
+})
