@@ -64,44 +64,16 @@ lspconfig.elixirls.setup({
   },
 })
 
-local rust_opts = {
-  tools = { -- rust-tools options
-    autoSetHints = true,
-    runnables = {
-      use_telescope = true,
-    },
-
-    inlay_hints = {
-      show_parameter_hints = true,
-      parameter_hints_prefix = "<- ",
-      other_hints_prefix = "=> ",
-      max_len_align = false,
-      max_len_align_padding = 1,
-      right_align = false,
-      right_align_padding = 7,
-    },
-
-    hover_actions = {
-      border = {
-        { "╭", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╮", "FloatBorder" },
-        { "│", "FloatBorder" },
-        { "╯", "FloatBorder" },
-        { "─", "FloatBorder" },
-        { "╰", "FloatBorder" },
-        { "│", "FloatBorder" },
-      },
-
-      auto_focus = false,
-    },
-  },
+lspconfig.rust_analyzer.setup{
+  settings = {
+    ['rust-analyzer'] = {
+      diagnostics = {
+        enable = false;
+      }
+    }
+  }
 }
-
---require('rust-tools.inlay_hints').toggle_inlay_hints()
-require("rust-tools").setup(rust_opts)
-
-require'lspconfig'.lua_ls.setup({
+lspconfig.lua_ls.setup({
   on_init = function(client)
     local path = client.workspace_folders[1].name
     if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then

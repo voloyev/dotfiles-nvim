@@ -48,7 +48,6 @@ require("lazy").setup({
 
   -- rust related
   "rust-lang/rust.vim",
-  "simrat39/rust-tools.nvim",
 
   -- telescope
   {
