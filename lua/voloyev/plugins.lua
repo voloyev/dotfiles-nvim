@@ -105,8 +105,9 @@ require("lazy").setup({
     branch = "v2", -- optional but strongly recommended
     opts = { keys = "etovxqpdygfblzhckisuran" }
   },
-  "L3MON4D3/LuaSnip",
-  "saadparwaiz1/cmp_luasnip",
+  "honza/vim-snippets",
+  "dcampos/nvim-snippy",
+  "dcampos/cmp-snippy",
   "hrsh7th/cmp-nvim-lsp",
   "hrsh7th/cmp-buffer",
   "hrsh7th/cmp-path",
@@ -182,7 +183,8 @@ require("lazy").setup({
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {}
   },
-})
+  "mg979/vim-visual-multi",
+ })
 
 
 require("telescope").load_extension("file_browser")

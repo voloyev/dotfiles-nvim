@@ -7,6 +7,7 @@ local lspconfig = require("lspconfig")
 local telescope = require("telescope.builtin")
 local trouble = require("trouble")
 local null_ls = require("null-ls")
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 null_ls.setup({
   sources = {
@@ -23,25 +24,44 @@ null_ls.setup({
 })
 
 require("mason-null-ls").setup({
-    ensure_installed = nil,
-    automatic_installation = true,
+  ensure_installed = nil,
+  automatic_installation = true,
 })
 
-lspconfig.pyright.setup({})
-lspconfig.clangd.setup({})
-lspconfig.tsserver.setup({})
-lspconfig.solargraph.setup({})
-lspconfig.zls.setup({})
-lspconfig.ocamllsp.setup({})
-lspconfig.svelte.setup({})
-lspconfig.templ.setup({})
+lspconfig.pyright.setup({
+  capabilities = capabilities
+})
+lspconfig.clangd.setup({
+  capabilities = capabilities
+})
+lspconfig.tsserver.setup({
+  capabilities = capabilities
+})
+lspconfig.solargraph.setup({
+  capabilities = capabilities
+})
+lspconfig.zls.setup({
+  capabilities = capabilities
+})
+lspconfig.ocamllsp.setup({
+  capabilities = capabilities
+})
+lspconfig.svelte.setup({
+  capabilities = capabilities
+})
+lspconfig.templ.setup({
+  capabilities = capabilities
+})
 vim.filetype.add({ extension = { templ = "templ" } })
+
 lspconfig.tailwindcss.setup({
-    filetypes = { "templ", "astro", "javascript", "typescript", "react" },
-    init_options = { userLanguages = { templ = "html" } },
+  capabilities = capabilities,
+  filetypes = { "templ", "astro", "javascript", "typescript", "react" },
+  init_options = { userLanguages = { templ = "html" } },
 })
 
 lspconfig.emmet_ls.setup({
+  capabilities = capabilities,
   filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
   init_options = {
     html = {
@@ -54,6 +74,7 @@ lspconfig.emmet_ls.setup({
 })
 
 lspconfig.gopls.setup({
+  capabilities = capabilities,
   cmd = { "gopls", "serve" },
   settings = {
     gopls = {
@@ -67,6 +88,7 @@ lspconfig.gopls.setup({
 })
 
 lspconfig.nim_langserver.setup({
+  capabilities = capabilities,
   settings = {
     nim = {
       nimsuggestPath = "~/.nimble/bin/nimlangserver"
@@ -86,16 +108,9 @@ lspconfig.nim_langserver.setup({
 -- lspconfig.elixirls.setup({
 --   cmd = { elixirlsp_cmd },
 --   capabilities = capabilities,
---   on_attach = on_attach,
 --   settings = {
 --     elixirLS = {
---       -- I choose to disable dialyzer for personal reasons, but
---       -- I would suggest you also disable it unless you are well
---       -- aquainted with dialzyer and know how to use it.
 --       dialyzerEnabled = true,
---       -- I also choose to turn off the auto dep fetching feature.
---       -- It often get's into a weird state that requires deleting
---       -- the .elixir_ls directory and restarting your editor.
 --       fetchDeps = false,
 --     },
 --   },
@@ -104,24 +119,27 @@ lspconfig.nim_langserver.setup({
 --
 local lexical_cmd = "~/Applications/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
 lspconfig.lexical.setup({
+  capabilities = capabilities,
   cmd = { lexical_cmd },
   settings = {},
 })
 
 lspconfig.rust_analyzer.setup({
+  capabilities = capabilities,
   settings = {
     ['rust-analyzer'] = {
       diagnostics = {
-        enable = false;
+        enable = false,
       }
     }
   }
 })
 
 lspconfig.lua_ls.setup({
+  capabilities = capabilities,
   on_init = function(client)
     local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+    if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
         Lua = {
           runtime = {
@@ -145,10 +163,20 @@ lspconfig.lua_ls.setup({
 })
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
-vim.keymap.set("n", "<leader>le", vim.diagnostic.open_float, opts)
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+vim.keymap.set("n", "[d", function() trouble.next({skip_groups = true, jump = true}) end, opts)
+vim.keymap.set("n", "]d", function() trouble.previous({skip_groups = true, jump = true}) end, opts)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+
+local tele_trouble = require("trouble.providers.telescope")
+local tele = require("telescope")
+tele.setup {
+  defaults = {
+    mappings = {
+      i = { ["<c-t>"] = tele_trouble.open_with_trouble },
+      n = { ["<c-t>"] = tele_trouble.open_with_trouble },
+    },
+  },
+}
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -158,10 +186,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    local bufopts = { noremap = true, silent = true, buffer = ev.buf }
     vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", telescope.lsp_definitions, bufopts)
-    vim.keymap.set("n", "<leader>K", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set('n', 'gr', telescope.lsp_references, bufopts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
     vim.keymap.set("n", "<leader>gi", telescope.lsp_implementations, bufopts)
     vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
@@ -171,8 +200,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, bufopts)
     vim.keymap.set("n", "<leader>D", telescope.lsp_type_definitions, bufopts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
-    vim.keymap.set('n', '<leader>gr', telescope.lsp_references, bufopts)
+    vim.keymap.set({"v", "n"}, "<leader>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "<leader>F", function()
       vim.lsp.buf.format({ async = true })
@@ -204,4 +232,3 @@ vim.keymap.set("n", "<leader>xl", function() trouble.toggle("loclist") end)
 --   end,
 -- })
 --
-
