@@ -1,6 +1,3 @@
-local telescope = require("telescope.builtin")
-local hop = require("hop")
-local directions = require("hop.hint").HintDirection
 -- sane regexes
 --vim.keymap.set("n",'/', '/\\v')
 --vim.keymap.set("v",'/', '/\\v')
@@ -56,40 +53,3 @@ vim.opt.splitright = true -- when splitting vertically, mnove coursor to right p
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
--- PLUGINS
-
--- git
-vim.keymap.set("n", "<Leader>gg", vim.cmd.Git)
-
--- nerdtree
-vim.keymap.set("n", "<leader>nn", vim.cmd.NERDTreeFocus)
-vim.keymap.set("n", "<leader>nt", vim.cmd.NERDTree)
-
---undotree
-vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-
---telescope
-vim.keymap.set("n", "<leader><leader>", telescope.find_files)
-vim.keymap.set("n", "<C-p>", telescope.git_files)
-vim.keymap.set("n", "<leader>ff", telescope.live_grep)
-vim.keymap.set("n", "<leader>ob", telescope.buffers)
-vim.keymap.set("n", "<leader>oh", telescope.help_tags)
-vim.keymap.set(
-  "n",
-  "<leader>fb",
-  ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-  { noremap = true }
-)
-
-vim.keymap.set('n', '<leader>hf', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-end, { remap = true })
-vim.keymap.set('', '<leader>hF', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-end, { remap = true })
-vim.keymap.set('', '<leader>ht', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, { remap = true })
-vim.keymap.set('', '<leader>hT', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-end, { remap = true })

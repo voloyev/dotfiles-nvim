@@ -5,8 +5,6 @@ vim.g.maplocalleader = "\\"
 vim.opt.mouse = "a"
 vim.opt.showmode = false
 vim.opt.showmatch = true
-vim.opt.background = "dark"
-vim.cmd([[colorscheme gruvbox]])
 
 -- basic settings
 vim.opt.encoding = "utf-8"
