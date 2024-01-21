@@ -30,7 +30,7 @@ require("lazy").setup({
   { "ellisonleao/gruvbox.nvim", priority = 1000 },
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "kyazdani42/nvim-web-devicons", lazy = true }
+    dependencies = { "nvim-tree/nvim-web-devicons", lazy = true },
   },
   "mboughaba/i3config.vim",
 
@@ -196,21 +196,4 @@ require("lualine").setup({
   },
 })
 
-
 require("ibl").setup({})
-
-
-local hop = require('hop')
-local directions = require('hop.hint').HintDirection
-vim.keymap.set('n', '<leader>hf', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-end, { remap = true })
-vim.keymap.set('', '<leader>hF', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-end, { remap = true })
-vim.keymap.set('', '<leader>ht', function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, { remap = true })
-vim.keymap.set('', '<leader>hT', function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-end, { remap = true })

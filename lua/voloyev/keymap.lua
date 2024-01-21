@@ -67,33 +67,29 @@ vim.keymap.set("n", "<leader>nt", vim.cmd.NERDTree)
 
 --undotree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-vim.keymap.set("n", "<leader>e", function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
-end, { remap = true })
 
-vim.keymap.set("n", "<leader>E", function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-end, { remap = true })
-
-vim.keymap.set("n", "<leader>t", function()
-  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-end, { remap = true })
-
-vim.keymap.set("n", "<leader>T", function()
-  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-end, { remap = true })
-
+--telescope
 vim.keymap.set("n", "<leader><leader>", telescope.find_files)
 vim.keymap.set("n", "<C-p>", telescope.git_files)
 vim.keymap.set("n", "<leader>ff", telescope.live_grep)
 vim.keymap.set("n", "<leader>ob", telescope.buffers)
 vim.keymap.set("n", "<leader>oh", telescope.help_tags)
-vim.keymap.set("n", "<leader>gd", telescope.lsp_definitions)
-vim.keymap.set("n", "gr", telescope.lsp_references)
-
 vim.keymap.set(
   "n",
-  "<space>fb",
+  "<leader>fb",
   ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
   { noremap = true }
 )
+
+vim.keymap.set('n', '<leader>hf', function()
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set('', '<leader>hF', function()
+  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+end, { remap = true })
+vim.keymap.set('', '<leader>ht', function()
+  hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+end, { remap = true })
+vim.keymap.set('', '<leader>hT', function()
+  hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+end, { remap = true })
