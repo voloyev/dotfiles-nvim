@@ -34,6 +34,7 @@ vim.opt.numberwidth = 3    -- always reserve 3 spaces for line number
 vim.opt.relativenumber = true
 vim.opt.modelines = 0
 vim.opt.showcmd = true     -- display command in bottom bar
+vim.opt.foldcolumn = "1"
 
 -- Search
 vim.opt.incsearch = true -- starts searching as soon as typing, without enter needed
