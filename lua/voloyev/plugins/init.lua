@@ -11,7 +11,6 @@ return {
     end
   },
   "MunifTanjim/nui.nvim",
-  "ervandew/supertab",
 
   "tpope/vim-markdown",
   "rust-lang/rust.vim",

@@ -48,24 +48,26 @@ return {
       lspconfig.pyright.setup({
         capabilities = capabilities
       })
-      
+
       lspconfig.clangd.setup({
         capabilities = capabilities
       })
-      
+
       lspconfig.tsserver.setup({
         capabilities = capabilities
       })
 
-      --lspconfig.solargraph.setup({
-      --  capabilities = capabilities
-      --})
-      --lspconfig.ruby_ls.setup({
-      --  capabilities = capabilities
-      --})
+      lspconfig.solargraph.setup({
+       capabilities = capabilities
+      })
+      -- lspconfig.ruby_ls.setup({
+      --   capabilities = capabilities
+      -- })
+      --
       lspconfig.zls.setup({
         capabilities = capabilities
       })
+
       lspconfig.ocamllsp.setup({
         capabilities = capabilities
       })
@@ -140,7 +142,7 @@ return {
       -- })
       --
       --
-      local lexical_cmd = "~/Applications/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
+      local lexical_cmd = "/home/voloyev/Applications/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
       lspconfig.lexical.setup({
         capabilities = capabilities,
         cmd = { lexical_cmd },
