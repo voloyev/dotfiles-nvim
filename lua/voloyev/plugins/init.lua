@@ -11,20 +11,29 @@ return {
   --     vim.cmd([[colorscheme gruvbox]])
   --   end
   -- },
+  -- {
+  --   'jesseleite/nvim-noirbuddy',
+  --   dependencies = {
+  --     { 'tjdevries/colorbuddy.nvim', branch = 'dev' }
+  --   },
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     vim.opt.background = "dark"
+  --     require("noirbuddy").setup({
+  --       preset = 'minimal',
+  --     })
+  --   end
+  -- },
   {
-    'jesseleite/nvim-noirbuddy',
-    dependencies = {
-      { 'tjdevries/colorbuddy.nvim', branch = 'dev' }
-    },
-    lazy = false,
-    priority = 1000,
+    "rose-pine/neovim",
+    name = "rose-pine",
     config = function()
       vim.opt.background = "dark"
-      require("noirbuddy").setup({
-        preset = 'minimal',
-      })
+      vim.cmd("colorscheme rose-pine-main")
     end
   },
+
   "MunifTanjim/nui.nvim",
 
   "tpope/vim-markdown",

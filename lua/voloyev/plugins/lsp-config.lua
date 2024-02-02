@@ -22,7 +22,7 @@ return {
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd", "solargraph", "gopls", "zls", "templ", "svelte", "ruby_ls", "html-lsp" },
+        ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd", "solargraph", "gopls", "zls", "templ", "svelte", "ruby_ls", "html" },
       })
 
       local lspconfig = require("lspconfig")
