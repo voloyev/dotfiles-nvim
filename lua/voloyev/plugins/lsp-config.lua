@@ -5,7 +5,12 @@ return {
     opts = {}
   },
   "neovim/nvim-lspconfig",
-  "williamboman/mason.nvim",
+  {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end
+  },
   "williamboman/mason-lspconfig.nvim",
   {
     "jay-babu/mason-null-ls.nvim",
@@ -17,7 +22,7 @@ return {
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd", "solargraph", "gopls", "zls", "templ", "svelte", "ruby_ls" },
+        ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd", "solargraph", "gopls", "zls", "templ", "svelte", "ruby_ls", "html-lsp" },
       })
 
       local lspconfig = require("lspconfig")
@@ -44,7 +49,7 @@ return {
         ensure_installed = nil,
         automatic_installation = true,
       })
-
+      lspconfig.html.setup({})
       lspconfig.pyright.setup({
         capabilities = capabilities
       })
@@ -58,8 +63,9 @@ return {
       })
 
       lspconfig.solargraph.setup({
-       capabilities = capabilities
+        capabilities = capabilities
       })
+      --
       -- lspconfig.ruby_ls.setup({
       --   capabilities = capabilities
       -- })
