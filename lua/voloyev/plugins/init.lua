@@ -1,13 +1,28 @@
 return {
   -- themes
-  --'fxn/vim-monochrome'
-  --"voloyev/vim-monochrome"
+  --'fxn/vim-monochrome',
+  --
+  --"voloyev/vim-monochrome",
+  -- {
+  --   "ellisonleao/gruvbox.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     vim.opt.background = "dark"
+  --     vim.cmd([[colorscheme gruvbox]])
+  --   end
+  -- },
   {
-    "ellisonleao/gruvbox.nvim",
+    'jesseleite/nvim-noirbuddy',
+    dependencies = {
+      { 'tjdevries/colorbuddy.nvim', branch = 'dev' }
+    },
+    lazy = false,
     priority = 1000,
     config = function()
       vim.opt.background = "dark"
-      vim.cmd([[colorscheme gruvbox]])
+      require("noirbuddy").setup({
+        preset = 'minimal',
+      })
     end
   },
   "MunifTanjim/nui.nvim",
@@ -144,6 +159,15 @@ return {
       vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
         desc = "Search on current file"
       })
+    end
+  },
+  {
+    'rmagatti/auto-session',
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/w", "~/fun", "/" },
+      }
     end
   }
 }

@@ -1,5 +1,6 @@
 HOME = os.getenv("HOME")
 -- Set a leader key
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 vim.opt.mouse = "a"
@@ -29,11 +30,11 @@ vim.opt.eol = false -- show if there's no eol char
 vim.opt.showbreak = "↪" -- character to show when line is broken
 
 -- Sidebar
-vim.opt.number = true      -- line number on the left
-vim.opt.numberwidth = 3    -- always reserve 3 spaces for line number
+vim.opt.number = true   -- line number on the left
+vim.opt.numberwidth = 3 -- always reserve 3 spaces for line number
 vim.opt.relativenumber = true
 vim.opt.modelines = 0
-vim.opt.showcmd = true     -- display command in bottom bar
+vim.opt.showcmd = true -- display command in bottom bar
 vim.opt.foldcolumn = "1"
 
 -- Search
@@ -47,10 +48,10 @@ vim.opt.mps = vim.o.mps .. ",<:>"
 -- White characters
 vim.opt.autoindent = true
 vim.opt.smartindent = true
-vim.opt.tabstop = 2            -- 1 tab = 2 spaces
-vim.opt.softtabstop = 2        -- 1 tab = 2 spaces
-vim.opt.shiftwidth = 2         -- indentation rule
-vim.opt.expandtab = true       -- expand tab to spaces
+vim.opt.tabstop = 2      -- 1 tab = 2 spaces
+vim.opt.softtabstop = 2  -- 1 tab = 2 spaces
+vim.opt.shiftwidth = 2   -- indentation rule
+vim.opt.expandtab = true -- expand tab to spaces
 vim.opt.foldmethod = "indent"
 vim.opt.foldlevel = 99
 
@@ -65,4 +66,3 @@ vim.opt.undofile = true
 vim.opt.cursorline = true
 
 vim.opt.termguicolors = true
-

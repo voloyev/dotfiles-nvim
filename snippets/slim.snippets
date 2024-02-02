@@ -1,0 +1,21 @@
+snippet medicares "Add medicare script"
+  .row.medicare-script
+    .col-xs-12
+      img.logo-img[src="#{asset_path('icons/agent_script.png')}"]
+      .inline-medicare-script.agent-script
+		    | ${1:text}
+
+snippet medicare_with_instructions "Add medicare script with instruction block"
+	.row.medicare-script
+    .col-xs-12
+      img.logo-img[src="#{asset_path('icons/agent_script.png')}"]
+      .inline-medicare-script.agent-script
+        | ${1:text}
+
+      .row.tips-script-in-block
+        .col-xs-11.col-md-11.medicare-script.tips-script style='margin-left:30px; margin-right:20px;'
+          img.logo-img[src="#{asset_path('icons/instructions.png')}"]
+          .inline-medicare-script.tip-script
+            | ${2:text}
+
+	
