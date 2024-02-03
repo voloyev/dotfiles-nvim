@@ -1,36 +1,11 @@
 return {
-  -- themes
-  --'fxn/vim-monochrome',
-  --
-  --"voloyev/vim-monochrome",
-  -- {
-  --   "ellisonleao/gruvbox.nvim",
-  --   priority = 1000,
-  --   config = function()
-  --     vim.opt.background = "dark"
-  --     vim.cmd([[colorscheme gruvbox]])
-  --   end
-  -- },
-  -- {
-  --   'jesseleite/nvim-noirbuddy',
-  --   dependencies = {
-  --     { 'tjdevries/colorbuddy.nvim', branch = 'dev' }
-  --   },
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     vim.opt.background = "dark"
-  --     require("noirbuddy").setup({
-  --       preset = 'minimal',
-  --     })
-  --   end
-  -- },
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
     config = function()
+      require("gruvbox").setup({})
       vim.opt.background = "dark"
-      vim.cmd("colorscheme rose-pine-main")
+      vim.cmd([[colorscheme gruvbox]])
     end
   },
 
