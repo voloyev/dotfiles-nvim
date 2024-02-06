@@ -40,7 +40,7 @@ vim.opt.foldcolumn = "1"
 -- Search
 vim.opt.incsearch = true -- starts searching as soon as typing, without enter needed
 vim.opt.smartcase = true -- case insentive unless capitals used in search
-vim.opt.hlsearch = false
+vim.opt.hlsearch = true
 
 vim.opt.matchtime = 2 -- delay before showing matching paren
 vim.opt.mps = vim.o.mps .. ",<:>"
