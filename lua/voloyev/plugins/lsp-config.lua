@@ -28,27 +28,14 @@ return {
       local lspconfig = require("lspconfig")
       local telescope = require("telescope.builtin")
       local trouble = require("trouble")
-      local null_ls = require("null-ls")
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.diagnostics.eslint,
-          null_ls.builtins.code_actions.shellcheck,
-          null_ls.builtins.diagnostics.credo,
-          null_ls.builtins.diagnostics.erb_lint,
-          null_ls.builtins.diagnostics.flake8,
-          null_ls.builtins.diagnostics.hadolint,
-          null_ls.builtins.diagnostics.rubocop,
-          null_ls.builtins.diagnostics.eslint,
-          null_ls.builtins.diagnostics.clang_check,
-        },
-      })
 
       require("mason-null-ls").setup({
         ensure_installed = nil,
         automatic_installation = true,
+        handlers = {}
       })
+
       lspconfig.html.setup({})
       lspconfig.pyright.setup({
         capabilities = capabilities
@@ -148,7 +135,7 @@ return {
       -- })
       --
       --
-      local lexical_cmd = "/home/voloyev/Applications/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
+      local lexical_cmd = "/home/voloyev/w/elixir/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
       lspconfig.lexical.setup({
         capabilities = capabilities,
         cmd = { lexical_cmd },
@@ -213,7 +200,7 @@ return {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(ev)
           -- Enable completion triggered by <c-x><c-o>
-          vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+          -- vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
           -- Mappings.
           -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -246,23 +233,6 @@ return {
       vim.keymap.set("n", "<leader>xd", function() trouble.toggle("document_diagnostics") end)
       vim.keymap.set("n", "<leader>xq", function() trouble.toggle("quickfix") end)
       vim.keymap.set("n", "<leader>xl", function() trouble.toggle("loclist") end)
-
-
-      -- require('lint').linters_by_ft = {
-      --   markdown = { 'vale', },
-      --   typescript = { 'eslint', },
-      --   javascript = { 'eslint', },
-      --   ruby = { 'rubocop', },
-      --   elixir = { 'credo', },
-      -- }
-
-      --
-      -- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-      --   callback = function()
-      --     require("lint").try_lint()
-      --   end,
-      -- })
-      --
     end
   },
 }
