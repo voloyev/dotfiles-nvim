@@ -11,7 +11,7 @@ return {
         -- A list of parser names, or "all"
         ensure_installed = {
           "c", "ruby", "python", "elixir", "lua", "rust",
-          "lua", "haskell", "javascript", "typescript", "python", "ocaml", "html", "svelte", "yaml"
+          "lua", "haskell", "javascript", "typescript", "python", "ocaml", "html", "svelte", "yaml", "gleam"
         },
         sync_install = false,
         auto_install = true,

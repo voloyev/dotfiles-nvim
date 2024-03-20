@@ -14,7 +14,7 @@ vim.opt.backspace = "indent,eol,start" -- backspace works on every char in inser
 vim.opt.history = 1000
 vim.opt.dictionary = "/usr/share/dict/words"
 vim.opt.startofline = true
-
+vim.opt.clipboard = "unnamedplus"
 -- Display
 vim.opt.showmatch = true -- show matching brackets
 vim.opt.scrolloff = 3 -- always show 3 rows from edge of the screen
