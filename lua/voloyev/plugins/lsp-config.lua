@@ -42,6 +42,9 @@ return {
       lspconfig.html.setup({
         capabilities = capabilities
       })
+      lspconfig.html.setup({
+        capabilities = capabilities
+      })
       lspconfig.pyright.setup({
         capabilities = capabilities
       })
@@ -85,7 +88,7 @@ return {
 
       lspconfig.emmet_ls.setup({
         capabilities = capabilities,
-        filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
+        filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue", "react" },
         init_options = {
           html = {
             options = {
@@ -216,6 +219,7 @@ return {
           vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
           vim.keymap.set("n", "gi", telescope.lsp_implementations, bufopts)
           vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+          vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, bufopts)
           vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
           vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
           vim.keymap.set("n", "<leader>wl", function()
@@ -224,7 +228,6 @@ return {
           vim.keymap.set("n", "<leader>D", telescope.lsp_type_definitions, bufopts)
           vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
           vim.keymap.set({ "v", "n" }, "<leader>ca", vim.lsp.buf.code_action, bufopts)
-          vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, bufopts)
           vim.keymap.set("n", "<leader>F", function()
             vim.lsp.buf.format({ async = true })
           end, bufopts)
