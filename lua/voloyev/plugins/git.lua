@@ -23,6 +23,12 @@ return {
         "ibhagwan/fzf-lua",              -- optional
       },
       config = true
+    },
+    {
+      'f-person/git-blame.nvim',
+      config = function()
+        require('gitblame').setup({})
+      end
     }
   },
 }
