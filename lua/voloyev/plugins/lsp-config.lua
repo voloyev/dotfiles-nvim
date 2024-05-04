@@ -22,7 +22,10 @@ return {
     config = function()
       require("mason").setup()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd", "solargraph", "gopls", "zls", "templ", "svelte", "ruby_lsp", "html" },
+        ensure_installed = {
+          "lua_ls", "rust_analyzer", "tsserver", "pyright", "elixirls", "clangd",
+          "solargraph", "gopls", "zls", "templ", "svelte", "ruby_lsp", "html", "emmet_ls"
+        },
       })
 
       local lspconfig = require("lspconfig")
@@ -35,6 +38,7 @@ return {
         automatic_installation = true,
         handlers = {}
       })
+
       lspconfig.gleam.setup({
         capabilities = capabilities
       })
@@ -60,11 +64,11 @@ return {
       lspconfig.solargraph.setup({
         capabilities = capabilities
       })
-      --
-      -- lspconfig.ruby_ls.setup({
-      --   capabilities = capabilities
-      -- })
-      --
+
+      lspconfig.ruby_ls.setup({
+        capabilities = capabilities
+      })
+
       lspconfig.zls.setup({
         capabilities = capabilities
       })
