@@ -10,7 +10,8 @@ return {
     opts = {
       extensions = {
         file_browser = {
-          grouped = true
+          grouped = true,
+          hidden = true
         }
       }
     },
