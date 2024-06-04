@@ -59,6 +59,7 @@ return {
 					"ruby_lsp",
 					"html",
 					"emmet_ls",
+          "jsonls",
 				},
 			})
 
@@ -99,7 +100,7 @@ return {
 				capabilities = capabilities,
 			})
 
-			lspconfig.ruby_ls.setup({
+			lspconfig.ruby_lsp.setup({
 				capabilities = capabilities,
 			})
 
@@ -174,6 +175,9 @@ return {
 				},
 			})
 
+			lspconfig.jsonls.setup({
+				capabilities = capabilities,
+			})
 			--
 			-- require("elixir").setup({
 			--   nextls = {enable = false},
@@ -256,8 +260,8 @@ return {
 			tele.setup({
 				defaults = {
 					mappings = {
-						i = { ["<c-t>"] = tele_trouble.open_with_trouble },
-						n = { ["<c-t>"] = tele_trouble.open_with_trouble },
+						i = { ["<c-t>"] = tele_trouble.open },
+						n = { ["<c-t>"] = tele_trouble.open },
 					},
 				},
 			})

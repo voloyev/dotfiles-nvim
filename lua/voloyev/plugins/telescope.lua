@@ -7,16 +7,16 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-file-browser.nvim",
     },
-    opts = {
-      extensions = {
-        file_browser = {
-          grouped = true,
-          hidden = true
-        }
-      }
-    },
     config = function()
       require("telescope").load_extension("file_browser")
+      require("telescope").setup({
+        extensions = {
+          file_browser = {
+            hidden = { file_browser = true, folder_browser = true }
+          }
+        }
+      })
+
       local telescope = require("telescope.builtin")
       vim.keymap.set("n", "<leader><leader>", telescope.find_files)
       vim.keymap.set("n", "<C-p>", telescope.git_files)
@@ -26,7 +26,7 @@ return {
       vim.keymap.set(
         "n",
         "<leader>fb",
-        ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+        ":Telescope file_browser path=%:p:h select_buffer=true hidden=true<CR>",
         { noremap = true }
       )
     end
