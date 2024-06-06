@@ -255,7 +255,7 @@ return {
       end, opts)
       vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 
-      local tele_trouble = require("trouble.providers.telescope")
+      local tele_trouble = require("trouble.sources.telescope")
       local tele = require("telescope")
       tele.setup({
         defaults = {
