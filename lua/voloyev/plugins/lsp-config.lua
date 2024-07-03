@@ -60,6 +60,7 @@ return {
           "html",
           "emmet_ls",
           "jsonls",
+          "yamlls"
         },
       })
 
@@ -245,6 +246,9 @@ return {
           return true
         end,
       })
+
+      lspconfig.yamlls.setup({})
+
       -- See `:help vim.diagnostic.*` for documentation on any of the below functions
       local opts = { noremap = true, silent = true }
       vim.keymap.set("n", "[d", function()
