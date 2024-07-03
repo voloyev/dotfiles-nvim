@@ -165,7 +165,18 @@ return {
         show_dot_dirs = true,
         show_colors = true
       })
-      vim.keymap.set("n", "<leader>d", ":Dired<CR>")
+      vim.keymap.set("n", "<leader>dd", ":Dired<CR>")
+    end
+  },
+  {
+    'stevearc/oil.nvim',
+    opts = {},
+    -- Optional dependencies
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("oil").setup()
+      vim.keymap.set("n", "<leader>do", ":Oil<CR>")
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end
   }
 }
