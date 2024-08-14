@@ -60,7 +60,8 @@ return {
           "html",
           "emmet_ls",
           "jsonls",
-          "yamlls"
+          "yamlls",
+          "terraformls"
         },
       })
 
@@ -247,7 +248,13 @@ return {
         end,
       })
 
-      lspconfig.yamlls.setup({})
+      lspconfig.yamlls.setup({
+        capabilities = capabilities,
+      })
+
+      lspconfig.terraformls.setup({
+        capabilities = capabilities,
+      })
 
       -- See `:help vim.diagnostic.*` for documentation on any of the below functions
       local opts = { noremap = true, silent = true }

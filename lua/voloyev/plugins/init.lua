@@ -1,11 +1,17 @@
 return {
+  -- {
+  --   "ellisonleao/gruvbox.nvim",
+  --   priority = 1000,
+  --   config = function()
+  --     require("gruvbox").setup({})
+  --     vim.opt.background = "dark"
+  --     vim.cmd([[colorscheme gruvbox]])
+  --   end
+  -- },
   {
-    "ellisonleao/gruvbox.nvim",
-    priority = 1000,
+    "rebelot/kanagawa.nvim",
     config = function()
-      require("gruvbox").setup({})
-      vim.opt.background = "dark"
-      vim.cmd([[colorscheme gruvbox]])
+      vim.cmd("colorscheme kanagawa-dragon")
     end
   },
 
@@ -87,18 +93,6 @@ return {
     opts = {} -- this is equalent to setup({}) function
   },
   {
-    "scrooloose/nerdtree",
-    dependencies = {
-
-      "Xuyuanp/nerdtree-git-plugin",
-      "majutsushi/tagbar",
-    },
-    config = function()
-      vim.keymap.set("n", "<leader>nn", vim.cmd.NERDTreeFocus)
-      vim.keymap.set("n", "<leader>nt", vim.cmd.NERDTree)
-    end
-  },
-  {
     "mbbill/undotree",
     config = function()
       vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
@@ -155,27 +149,23 @@ return {
     end
   },
   {
-    "X3eRo0/dired.nvim",
-    dependencies = {
-      "MunifTanjim/nui.nvim"
-    },
-    config = function()
-      require('dired').setup({
-        show_hidden = true,
-        show_dot_dirs = true,
-        show_colors = true
-      })
-      vim.keymap.set("n", "<leader>dd", ":Dired<CR>")
-    end
-  },
-  {
     'stevearc/oil.nvim',
     opts = {},
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      require("oil").setup()
-      vim.keymap.set("n", "<leader>do", ":Oil<CR>")
+      require("oil").setup({
+        columns = {
+          "icon",
+          "permissions",
+          "size",
+          -- "mtime",
+        },
+        view_options = {
+          show_hidden = false,
+        }
+      })
+      vim.keymap.set("n", "<leader>do", vim.cmd.Oil)
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end
   }

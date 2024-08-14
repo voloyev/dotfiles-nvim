@@ -10,6 +10,11 @@ return {
     config = function()
       require("telescope").load_extension("file_browser")
       require("telescope").setup({
+        pickers = {
+          find_files = {
+            hidden = true
+          }
+        },
         extensions = {
           file_browser = {
             hidden = { file_browser = true, folder_browser = true }
