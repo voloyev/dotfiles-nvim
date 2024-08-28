@@ -165,7 +165,7 @@ return {
           show_hidden = false,
         }
       })
-      vim.keymap.set("n", "<leader>do", vim.cmd.Oil)
+      vim.keymap.set("n", "<leader>.", vim.cmd.Oil)
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end
   }
