@@ -47,7 +47,7 @@ return {
         ensure_installed = {
           "lua_ls",
           "rust_analyzer",
-          "tsserver",
+          "ts_ls",
           "pyright",
           "elixirls",
           "clangd",
@@ -61,7 +61,8 @@ return {
           "emmet_ls",
           "jsonls",
           "yamlls",
-          "terraformls"
+          "terraformls",
+          "ansiblels"
         },
       })
 
@@ -75,7 +76,10 @@ return {
         automatic_installation = true,
         handlers = {},
       })
-
+      lspconfig.ansiblels.setup({
+        capabilities = capabilities,
+        filetypes = { "yml", "yaml" }
+      })
       lspconfig.gleam.setup({
         capabilities = capabilities,
       })
@@ -94,7 +98,7 @@ return {
         capabilities = capabilities,
       })
 
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         capabilities = capabilities,
       })
 
