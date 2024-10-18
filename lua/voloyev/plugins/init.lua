@@ -168,5 +168,6 @@ return {
       vim.keymap.set("n", "<leader>.", vim.cmd.Oil)
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end
-  }
+  },
+  "armyers/Vim-Jinja2-Syntax"
 }

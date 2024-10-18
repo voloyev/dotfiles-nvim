@@ -62,7 +62,8 @@ return {
           "jsonls",
           "yamlls",
           "terraformls",
-          "ansiblels"
+          "ansiblels",
+          "jinja_lsp"
         },
       })
 
@@ -87,9 +88,7 @@ return {
       lspconfig.html.setup({
         capabilities = capabilities,
       })
-      lspconfig.html.setup({
-        capabilities = capabilities,
-      })
+
       lspconfig.pyright.setup({
         capabilities = capabilities,
       })
@@ -260,6 +259,17 @@ return {
         capabilities = capabilities,
       })
 
+      lspconfig.jinja_lsp.setup({
+        capabilities = capabilities,
+      })
+      vim.filetype.add {
+        extension = {
+          jinja = 'jinja',
+          jinja2 = 'jinja',
+          j2 = 'jinja',
+          html = 'jinja',
+        },
+      }
       -- See `:help vim.diagnostic.*` for documentation on any of the below functions
       local opts = { noremap = true, silent = true }
       vim.keymap.set("n", "[d", function()
