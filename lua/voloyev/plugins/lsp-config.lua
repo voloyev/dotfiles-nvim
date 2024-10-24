@@ -309,6 +309,7 @@ return {
           vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, bufopts)
           vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
           vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
+          vim.keymap.set("n", "<leader>ww", vim.diagnostic.open_float, bufopts)
           vim.keymap.set("n", "<leader>wl", function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
           end, bufopts)
