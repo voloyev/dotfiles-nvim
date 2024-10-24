@@ -34,9 +34,7 @@ return {
   "mboughaba/i3config.vim",
 
   "jmcantrell/vim-virtualenv",
-
   "mg979/vim-visual-multi",
-  "terryma/vim-multiple-cursors",
   {
     'numToStr/Comment.nvim',
     config = function()
@@ -99,15 +97,15 @@ return {
     end
   },
   {
-    "phaazon/hop.nvim",
-    branch = "v2", -- optional but strongly recommended
+    "smoka7/hop.nvim",
+    version = "*",
     opts = { keys = "etovxqpdygfblzhckisuran" },
     config = function()
       local hop = require("hop")
       local directions = require("hop.hint").HintDirection
       hop.setup({})
-      vim.keymap.set('n', '<leader>hf', function()
-        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+      vim.keymap.set('n', '<leader>hh', function()
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false })
       end, { remap = true })
       vim.keymap.set('', '<leader>hF', function()
         hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
@@ -125,7 +123,7 @@ return {
     config = function()
       require("spectre").setup({})
 
-      vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+      vim.keymap.set('n', '<leader>ss', '<cmd>lua require("spectre").toggle()<CR>', {
         desc = "Toggle Spectre"
       })
       vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
@@ -162,12 +160,35 @@ return {
           -- "mtime",
         },
         view_options = {
-          show_hidden = false,
+          show_hidden = true,
         }
       })
-      vim.keymap.set("n", "<leader>.", vim.cmd.Oil)
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
     end
   },
-  "armyers/Vim-Jinja2-Syntax"
+  "armyers/Vim-Jinja2-Syntax",
+  {
+    "Olical/conjure",
+    ft = { "clojure", "fennel", "python" }, -- etc
+    lazy = true,
+    init = function()
+      -- Set configuration options here
+      -- Uncomment this to get verbose logging to help diagnose internal Conjure issues
+      -- This is VERY helpful when reporting an issue with the project
+      -- vim.g["conjure#debug"] = true
+    end,
+
+    -- Optional cmp-conjure integration
+    dependencies = { "PaterJason/cmp-conjure" },
+  },
+  {
+    "PaterJason/cmp-conjure",
+    lazy = true,
+    config = function()
+      local cmp = require("cmp")
+      local config = cmp.get_config()
+      table.insert(config.sources, { name = "conjure" })
+      return cmp.setup(config)
+    end,
+  },
 }
