@@ -3,9 +3,50 @@ return {
     {
       "lewis6991/gitsigns.nvim",
       config = function()
-        require('gitsigns').setup({})
+        local gitsigns = require('gitsigns')
+        gitsigns.setup()
+        --
+        -- local function map(mode, l, r, opts)
+        --   opts = opts or {}
+        --   opts.buffer = bufnr
+        --   vim.keymap.set(mode, l, r, opts)
+        -- end
+        --
+        -- -- Navigation
+        -- map('n', ']c', function()
+        --   if vim.wo.diff then
+        --     vim.cmd.normal({ ']c', bang = true })
+        --   else
+        --     gitsigns.nav_hunk('next')
+        --   end
+        -- end)
+        --
+        -- map('n', '[c', function()
+        --   if vim.wo.diff then
+        --     vim.cmd.normal({ '[c', bang = true })
+        --   else
+        --     gitsigns.nav_hunk('prev')
+        --   end
+        -- end)
 
-        vim.keymap.set("n", "<leader>gp", ":Gitsigns preview_hunk<CR>", {})
+        -- Actions
+        local map = vim.keymap.set
+        map('n', '<leader>hs', gitsigns.stage_hunk)
+        map('n', '<leader>hr', gitsigns.reset_hunk)
+        map('v', '<leader>hs', function() gitsigns.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
+        map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
+        map('n', '<leader>hS', gitsigns.stage_buffer)
+        map('n', '<leader>hu', gitsigns.undo_stage_hunk)
+        map('n', '<leader>hR', gitsigns.reset_buffer)
+        map('n', '<leader>hp', gitsigns.preview_hunk)
+        map('n', '<leader>hb', function() gitsigns.blame_line { full = true } end)
+        map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
+        map('n', '<leader>hd', gitsigns.diffthis)
+        map('n', '<leader>hD', function() gitsigns.diffthis('~') end)
+        map('n', '<leader>td', gitsigns.toggle_deleted)
+
+        -- Text object
+        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
       end
     },
     {
@@ -36,14 +77,14 @@ return {
         local actions = require("diffview.actions")
 
         require("diffview").setup({
-          diff_binaries = false, -- Show diffs for binaries
+          diff_binaries = false,    -- Show diffs for binaries
           enhanced_diff_hl = false, -- See |diffview-config-enhanced_diff_hl|
-          git_cmd = { "git" }, -- The git executable followed by default args.
-          hg_cmd = { "hg" }, -- The hg executable followed by default args.
-          use_icons = true, -- Requires nvim-web-devicons
-          show_help_hints = true, -- Show hints for how to open the help panel
-          watch_index = true, -- Update views and index buffers when the git index changes.
-          icons = {         -- Only applies when use_icons is true.
+          git_cmd = { "git" },      -- The git executable followed by default args.
+          hg_cmd = { "hg" },        -- The hg executable followed by default args.
+          use_icons = true,         -- Requires nvim-web-devicons
+          show_help_hints = true,   -- Show hints for how to open the help panel
+          watch_index = true,       -- Update views and index buffers when the git index changes.
+          icons = {                 -- Only applies when use_icons is true.
             folder_closed = "",
             folder_open = "",
           },
@@ -67,28 +108,28 @@ return {
               -- Config for changed files, and staged files in diff views.
               layout = "diff2_horizontal",
               disable_diagnostics = false, -- Temporarily disable diagnostics for diff buffers while in the view.
-              winbar_info = false, -- See |diffview-config-view.x.winbar_info|
+              winbar_info = false,         -- See |diffview-config-view.x.winbar_info|
             },
             merge_tool = {
               -- Config for conflicted files in diff views during a merge or rebase.
               layout = "diff3_horizontal",
               disable_diagnostics = true, -- Temporarily disable diagnostics for diff buffers while in the view.
-              winbar_info = true, -- See |diffview-config-view.x.winbar_info|
+              winbar_info = true,         -- See |diffview-config-view.x.winbar_info|
             },
             file_history = {
               -- Config for changed files in file history views.
               layout = "diff2_horizontal",
               disable_diagnostics = false, -- Temporarily disable diagnostics for diff buffers while in the view.
-              winbar_info = false, -- See |diffview-config-view.x.winbar_info|
+              winbar_info = false,         -- See |diffview-config-view.x.winbar_info|
             },
           },
           file_panel = {
-            listing_style = "tree",    -- One of 'list' or 'tree'
-            tree_options = {           -- Only applies when listing_style is 'tree'
-              flatten_dirs = true,     -- Flatten dirs that only contain one single dir
+            listing_style = "tree",            -- One of 'list' or 'tree'
+            tree_options = {                   -- Only applies when listing_style is 'tree'
+              flatten_dirs = true,             -- Flatten dirs that only contain one single dir
               folder_statuses = "only_folded", -- One of 'never', 'only_folded' or 'always'.
             },
-            win_config = {             -- See |diffview-config-win_config|
+            win_config = {                     -- See |diffview-config-win_config|
               position = "left",
               width = 35,
               win_opts = {},
@@ -118,11 +159,11 @@ return {
           commit_log_panel = {
             win_config = {}, -- See |diffview-config-win_config|
           },
-          default_args = { -- Default args prepended to the arg-list for the listed commands
+          default_args = {   -- Default args prepended to the arg-list for the listed commands
             DiffviewOpen = {},
             DiffviewFileHistory = {},
           },
-          hooks = {},         -- See |diffview-config-hooks|
+          hooks = {},                 -- See |diffview-config-hooks|
           keymaps = {
             disable_defaults = false, -- Disable the default keymaps
             view = {
