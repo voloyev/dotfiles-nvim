@@ -1,20 +1,20 @@
 return {
-  -- {
-  --   "ellisonleao/gruvbox.nvim",
-  --   priority = 1000,
-  --   config = function()
-  --     require("gruvbox").setup({})
-  --     vim.opt.background = "dark"
-  --     vim.cmd([[colorscheme gruvbox]])
-  --   end
-  -- },
   {
-    "rebelot/kanagawa.nvim",
+    "ellisonleao/gruvbox.nvim",
+    priority = 1000,
     config = function()
-      vim.cmd("colorscheme kanagawa-dragon")
+      require("gruvbox").setup({})
+      vim.opt.background = "dark"
+      vim.cmd("colorscheme gruvbox")
     end
   },
-
+  -- {
+  --   "rebelot/kanagawa.nvim",
+  --   config = function()
+  --     vim.cmd("colorscheme kanagawa-dragon")
+  --   end
+  -- },
+  --
   "MunifTanjim/nui.nvim",
 
   "tpope/vim-markdown",
