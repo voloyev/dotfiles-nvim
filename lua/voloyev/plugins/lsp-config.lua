@@ -49,7 +49,6 @@ return {
           "rust_analyzer",
           "ts_ls",
           "pyright",
-          "elixirls",
           "clangd",
           "solargraph",
           "gopls",
@@ -63,7 +62,8 @@ return {
           "yamlls",
           "terraformls",
           "ansiblels",
-          "jinja_lsp"
+          "jinja_lsp",
+          "lexical"
         },
       })
 
@@ -204,11 +204,8 @@ return {
       -- })
       --
       --
-      local lexical_cmd = "/home/voloyev/w/elixir/lexical/_build/dev/package/lexical/bin/start_lexical.sh"
       lspconfig.lexical.setup({
         capabilities = capabilities,
-        cmd = { lexical_cmd },
-        settings = {},
       })
 
       lspconfig.rust_analyzer.setup({

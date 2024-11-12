@@ -191,4 +191,7 @@ return {
       return cmp.setup(config)
     end,
   },
+  'tpope/vim-dispatch',
+  'clojure-vim/vim-jack-in',
+  'radenling/vim-dispatch-neovim',
 }
