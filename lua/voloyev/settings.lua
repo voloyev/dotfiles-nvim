@@ -66,3 +66,4 @@ vim.opt.undofile = true
 vim.opt.cursorline = true
 
 vim.opt.termguicolors = true
+vim.diagnostic.config({ virtual_text = false })

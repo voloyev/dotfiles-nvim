@@ -143,9 +143,10 @@ return {
       vim.keymap.set('n', '<leader>ss', '<cmd> lua require("grug-far").open({ transient = true })<CR>', {
         desc = "Toggle Grug Far"
       })
-      vim.keymap.set('n', '<leader>sw', '<cmd>lua require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })<CR>', {
-        desc = "Search current word"
-      })
+      vim.keymap.set('n', '<leader>sw',
+        '<cmd>lua require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })<CR>', {
+          desc = "Search current word"
+        })
     end
   },
   {
@@ -205,4 +206,18 @@ return {
   'tpope/vim-dispatch',
   'clojure-vim/vim-jack-in',
   'radenling/vim-dispatch-neovim',
+  {
+    "fasterius/simple-zoom.nvim",
+    config = function()
+      vim.keymap.set('n', '<leader>z', require('simple-zoom').toggle_zoom)
+    end
+  },
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy", -- Or `LspAttach`
+    priority = 1000,  -- needs to be loaded in first
+    config = function()
+      require('tiny-inline-diagnostic').setup()
+    end
+  }
 }
