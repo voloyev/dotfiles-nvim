@@ -1,8 +1,40 @@
 return {
   {
     "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    cmd = "Trouble",
     opts = {},
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cl",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP Definitions / references / ... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+    },
   },
   {
     "stevearc/conform.nvim",
@@ -222,30 +254,36 @@ return {
       lspconfig.lua_ls.setup({
         capabilities = capabilities,
         on_init = function(client)
-          local path = client.workspace_folders[1].name
-          if
-              not vim.loop.fs_stat(path .. "/.luarc.json") and not vim.loop.fs_stat(path .. "/.luarc.jsonc")
-          then
-            client.config.settings = vim.tbl_deep_extend("force", client.config.settings, {
-              Lua = {
-                runtime = {
-                  version = "LuaJIT",
-                },
-                workspace = {
-                  checkThirdParty = false,
-                  library = {
-                    vim.env.VIMRUNTIME,
-                    -- "${3rd}/luv/library"
-                    -- "${3rd}/busted/library",
-                  },
-                },
-              },
-            })
-
-            client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc') then
+              return
+            end
           end
-          return true
+
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+            runtime = {
+              -- Tell the language server which version of Lua you're using
+              -- (most likely LuaJIT in the case of Neovim)
+              version = 'LuaJIT'
+            },
+            -- Make the server aware of Neovim runtime files
+            workspace = {
+              checkThirdParty = false,
+              library = {
+                vim.env.VIMRUNTIME
+                -- Depending on the usage, you might want to add additional paths here.
+                -- "${3rd}/luv/library"
+                -- "${3rd}/busted/library",
+              }
+              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
+              -- library = vim.api.nvim_get_runtime_file("", true)
+            }
+          })
         end,
+        settings = {
+          Lua = {}
+        }
       })
 
       lspconfig.yamlls.setup({
@@ -258,7 +296,13 @@ return {
 
       lspconfig.jinja_lsp.setup({
         capabilities = capabilities,
+        init_options = {
+          templates = '/Users/Volodymyr_Yevtushenko/w/PELO/api/cms/templates',
+          backend = { '/Users/Volodymyr_Yevtushenko/w/PELO/api/' },
+          lang = "python"
+        },
       })
+
       vim.filetype.add {
         extension = {
           jinja = 'jinja',
@@ -318,23 +362,6 @@ return {
           end, bufopts)
         end,
       })
-
-      -- TODO: Trouble keymap
-      vim.keymap.set("n", "<leader>xx", function()
-        trouble.toggle()
-      end)
-      vim.keymap.set("n", "<leader>xw", function()
-        trouble.toggle("workspace_diagnostics")
-      end)
-      vim.keymap.set("n", "<leader>xd", function()
-        trouble.toggle("document_diagnostics")
-      end)
-      vim.keymap.set("n", "<leader>xq", function()
-        trouble.toggle("quickfix")
-      end)
-      vim.keymap.set("n", "<leader>xl", function()
-        trouble.toggle("loclist")
-      end)
     end,
   },
 }
