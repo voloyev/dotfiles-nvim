@@ -80,6 +80,7 @@ return {
           "lua_ls",
           "rust_analyzer",
           "ts_ls",
+          "denols",
           "pyright",
           "clangd",
           "solargraph",
@@ -95,7 +96,8 @@ return {
           "terraformls",
           "ansiblels",
           "jinja_lsp",
-          "lexical"
+          "lexical",
+          "ols"
         },
       })
 
@@ -131,6 +133,12 @@ return {
 
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern("package.json"),
+      })
+
+      lspconfig.denols.setup({
+        capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
       })
 
       lspconfig.solargraph.setup({
@@ -143,6 +151,7 @@ return {
 
       lspconfig.zls.setup({
         capabilities = capabilities,
+        single_file_support = true
       })
 
       lspconfig.ocamllsp.setup({
@@ -238,6 +247,12 @@ return {
       --
       lspconfig.lexical.setup({
         capabilities = capabilities,
+        root_dir = function(fname)
+          return lspconfig.util.root_pattern("mix.exs", ".git")(fname) or vim.loop.cwd()
+        end,
+        filetypes = { "elixir", "eelixir", "heex" },
+        -- optional settings
+        settings = {}
       })
 
       lspconfig.rust_analyzer.setup({
@@ -301,6 +316,10 @@ return {
           backend = { '/Users/Volodymyr_Yevtushenko/w/PELO/api/' },
           lang = "python"
         },
+      })
+
+      require 'lspconfig'.ols.setup({
+        capabilities = capabilities
       })
 
       vim.filetype.add {

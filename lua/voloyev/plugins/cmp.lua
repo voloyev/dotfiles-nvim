@@ -59,9 +59,10 @@ return {
           end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
+          { name = "copilot" },
+          { name = "codeium" },
           { name = "nvim_lsp" },
-          { name = "snippy" }
-        }, {
+          { name = "snippy" },
           { name = "buffer" },
         }),
       })
@@ -93,5 +94,36 @@ return {
         }),
       })
     end
-  }
+  },
+  {
+    'Exafunction/codeium.vim',
+    event = 'BufEnter',
+    config = function()
+      vim.g.codeium_enabled = false
+      -- Change '<C-g>' here to any keycode you like.
+      vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
+      vim.keymap.set('i', '<c-|>', function() return vim.fn['codeium#CycleCompletions'](1) end,
+        { expr = true, silent = true })
+      vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end,
+        { expr = true, silent = true })
+      vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
+    end
+  },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
 }
