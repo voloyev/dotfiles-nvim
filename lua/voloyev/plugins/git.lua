@@ -52,7 +52,7 @@ return {
     {
       "tpope/vim-fugitive",
       config = function()
-        vim.keymap.set("n", "<Leader>gg", vim.cmd.Git)
+        vim.keymap.set("n", "<Leader>G", vim.cmd.Git)
       end
     },
     {
@@ -63,7 +63,9 @@ return {
         "sindrets/diffview.nvim",        -- optional
         "ibhagwan/fzf-lua",              -- optional
       },
-      config = true
+      config = function ()
+        vim.keymap.set("n", "<Leader>gg", vim.cmd.Neogit)
+      end
     },
     {
       'f-person/git-blame.nvim',
