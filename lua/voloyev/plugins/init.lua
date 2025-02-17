@@ -67,11 +67,9 @@ return {
     end
   },
   {
-    "kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
+    'echasnovski/mini.surround', version = false,
     config = function()
-      require("nvim-surround").setup({})
+      require('mini.surround').setup()
     end
   },
   {
@@ -104,7 +102,7 @@ return {
     opts = {},
     -- stylua: ignore
     keys = {
-      { "<leader>s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "<leader>s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
     },
   },
   {
