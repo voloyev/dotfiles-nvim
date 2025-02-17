@@ -8,22 +8,12 @@ return {
       vim.cmd("colorscheme gruvbox")
     end
   },
-  -- {
-  --   "rebelot/kanagawa.nvim",
-  --   config = function()
-  --     vim.cmd("colorscheme kanagawa-dragon")
-  --   end
-  -- },
-  --
   "MunifTanjim/nui.nvim",
-
   "tpope/vim-markdown",
   "rust-lang/rust.vim",
-
   "pangloss/vim-javascript",
   "leafgarland/typescript-vim",
   "mattn/emmet-vim",
-
   "elixir-editors/vim-elixir",
   "ollykel/v-vim",
   "fatih/vim-go",
@@ -32,7 +22,6 @@ return {
   "joerdav/templ.vim",
   "rhysd/vim-crystal",
   "mboughaba/i3config.vim",
-
   "jmcantrell/vim-virtualenv",
   "mg979/vim-visual-multi",
   {
@@ -102,20 +91,10 @@ return {
     opts = { keys = "etovxqpdygfblzhckisuran" },
     config = function()
       local hop = require("hop")
-      local directions = require("hop.hint").HintDirection
       hop.setup({})
-      vim.keymap.set('n', '<leader>hh', function()
-        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = false })
-      end, { remap = true })
-      vim.keymap.set('', '<leader>hF', function()
-        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
-      end, { remap = true })
-      vim.keymap.set('', '<leader>ht', function()
-        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
-      end, { remap = true })
-      vim.keymap.set('', '<leader>hT', function()
-        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
-      end, { remap = true })
+      vim.keymap.set('n', '<leader>hh', function() hop.hint_char1({ current_line_only = false }) end, { remap = true })
+      vim.keymap.set('n', '<leader>hH', function() hop.hint_char2() end, { remap = true })
+      vim.keymap.set('n', '<leader>hv', function() hop.hint_vertical() end, { remap = true })
     end
   },
   {
