@@ -48,15 +48,9 @@ return {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
-      formatters_by_ft = {
-        lua = { "stylua" },
-        -- Conform will run multiple formatters sequentially
-        python = { "isort", "black" },
-        -- Use a sub-list to run only the first available formatter
-        javascript = { "eslint" },
-        ruby = { "rubocop" },
-        go = { "gofmt" }
-      },
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
     }
   },
   {
@@ -67,7 +61,8 @@ return {
     end
   },
   {
-    'echasnovski/mini.surround', version = false,
+    'echasnovski/mini.surround',
+    version = false,
     config = function()
       require('mini.surround').setup()
     end

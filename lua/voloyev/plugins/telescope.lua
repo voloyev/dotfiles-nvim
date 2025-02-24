@@ -9,17 +9,18 @@ return {
     },
     config = function()
       require("telescope").load_extension("file_browser")
+      require("telescope").load_extension("ui-select")
       require("telescope").setup({
         pickers = {
           find_files = {
-            hidden = true
-          }
+            hidden = true,
+          },
         },
         extensions = {
           file_browser = {
-            hidden = { file_browser = true, folder_browser = true }
-          }
-        }
+            hidden = { file_browser = true, folder_browser = true },
+          },
+        },
       })
 
       local telescope = require("telescope.builtin")
@@ -34,11 +35,12 @@ return {
         ":Telescope file_browser path=%:p:h select_buffer=true hidden=true<CR>",
         { noremap = true }
       )
-    end
+    end,
   },
   {
-    'nvim-telescope/telescope-fzf-native.nvim',
+    "nvim-telescope/telescope-fzf-native.nvim",
     build =
-    'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+    "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
   },
+  'nvim-telescope/telescope-ui-select.nvim',
 }
