@@ -61,60 +61,14 @@ return {
       end, { desc = "Format file or range (in visual mode)" })
     end,
   },
-  "neovim/nvim-lspconfig",
   {
-    "williamboman/mason.nvim",
+    "neovim/nvim-lspconfig",
     config = function()
-      require("mason").setup()
-    end,
-  },
-  "williamboman/mason-lspconfig.nvim",
-  {
-    "jay-babu/mason-null-ls.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-      "williamboman/mason.nvim",
-      "nvimtools/none-ls.nvim",
-    },
-    config = function()
-      require("mason").setup()
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-          "lua_ls",
-          "rust_analyzer",
-          "ts_ls",
-          "denols",
-          "pyright",
-          "clangd",
-          "solargraph",
-          "gopls",
-          "zls",
-          "templ",
-          "svelte",
-          "ruby_lsp",
-          "html",
-          "emmet_ls",
-          "jsonls",
-          "yamlls",
-          "terraformls",
-          "ansiblels",
-          "jinja_lsp",
-          "lexical",
-          "ols",
-          "harper_ls",
-        },
-      })
-
       local lspconfig = require("lspconfig")
       local telescope = require("telescope.builtin")
       local trouble = require("trouble")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      require("mason-null-ls").setup({
-        ensure_installed = nil,
-        automatic_installation = true,
-        handlers = {},
-      })
       lspconfig.ansiblels.setup({
         capabilities = capabilities,
         filetypes = { "yml", "yaml" },
