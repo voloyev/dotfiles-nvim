@@ -93,7 +93,6 @@ return {
       -- })
 
       vim.lsp.config('pylyzer', {
-        capabilities = capabilities,
         settings = {
           python = {
             inlayHints = true,
@@ -143,7 +142,7 @@ return {
       vim.lsp.enable('denols')
 
       vim.lsp.enable('solargraph')
-      vim.lsp.enable('ruby_ls')
+      vim.lsp.enable('ruby_lsp')
 
       vim.lsp.config('zls', {
         -- capabilities = capabilities,
@@ -217,7 +216,6 @@ return {
       vim.lsp.enable('emmet_ls')
 
       vim.lsp.config('gopls', {
-        -- capabilities = capabilities,
         cmd = { "gopls", "serve" },
         settings = {
           gopls = {
