@@ -13,7 +13,7 @@ return {
           "c", "ruby", "python", "elixir", "lua", "rust",
           "lua", "haskell", "javascript", "typescript", "python",
           "ocaml", "html", "svelte", "yaml", "gleam", "terraform",
-          "scheme", "clojure", "zig", "go"
+          "scheme", "clojure", "zig", "go", "hcl"
         },
         sync_install = false,
         auto_install = true,

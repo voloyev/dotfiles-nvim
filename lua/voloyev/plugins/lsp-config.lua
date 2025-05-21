@@ -47,6 +47,10 @@ return {
           javascript = { "prettier", "eslint" },
           ruby = { "rubocop" },
           go = { "gofmt" },
+          hcl = { "packer_fmt" },
+          terraform = { "terraform_fmt" },
+          tfvars = { "terraform_fmt" },
+          ["terraform-vars"] = { "terraform_fmt" },
         },
       })
 
@@ -62,6 +66,14 @@ return {
     end,
   },
   {
+    "MysticalDevil/inlay-hints.nvim",
+    event = "LspAttach",
+    dependencies = { "neovim/nvim-lspconfig" },
+    config = function()
+      require("inlay-hints").setup()
+    end,
+  },
+  {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
@@ -69,67 +81,114 @@ return {
       local trouble = require("trouble")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      lspconfig.ansiblels.setup({
-        capabilities = capabilities,
+      vim.lsp.config("ansiblels", {
         filetypes = { "yml", "yaml" },
       })
-      lspconfig.gleam.setup({
-        capabilities = capabilities,
-      })
+      vim.lsp.enable('ansiblels')
+      vim.lsp.enable('gleam')
+      vim.lsp.enable('html')
+      --
+      -- lspconfig.pyright.setup({
+      -- 	capabilities = capabilities,
+      -- })
 
-      lspconfig.html.setup({
+      vim.lsp.config('pylyzer', {
         capabilities = capabilities,
+        settings = {
+          python = {
+            inlayHints = true,
+          },
+        },
       })
+      vim.lsp.enable('pylyzer')
+      vim.lsp.enable('ruff')
 
-      lspconfig.pyright.setup({
+      vim.lsp.config('clangd', {
         capabilities = capabilities,
+        settings = {
+          clangd = {
+            InlayHints = {
+              Designators = true,
+              Enabled = true,
+              ParameterNames = true,
+              DeducedTypes = true,
+            },
+            fallbackFlags = { "-std=c++20" },
+          },
+        }
       })
+      vim.lsp.enable('clangd')
 
-      lspconfig.clangd.setup({
-        capabilities = capabilities,
-      })
-
-      lspconfig.ts_ls.setup({
-        capabilities = capabilities,
+      vim.lsp.config('ts_ls', {
         root_dir = lspconfig.util.root_pattern("package.json"),
       })
+      vim.lsp.enable('ts_ls')
 
-      lspconfig.denols.setup({
+      vim.lsp.config('denols', {
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+        settings = {
+          deno = {
+            inlayHints = {
+              parameterNames = { enabled = "all", suppressWhenArgumentMatchesName = true },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = true, suppressWhenTypeMatchesName = true },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enable = true },
+              enumMemberValues = { enabled = true },
+            },
+          }
+        }
       })
+      vim.lsp.enable('denols')
 
-      lspconfig.solargraph.setup({
-        capabilities = capabilities,
-      })
+      vim.lsp.enable('solargraph')
+      vim.lsp.enable('ruby_ls')
 
-      lspconfig.ruby_lsp.setup({
-        capabilities = capabilities,
-      })
-
-      lspconfig.zls.setup({
-        capabilities = capabilities,
+      vim.lsp.config('zls', {
+        -- capabilities = capabilities,
         single_file_support = true,
+        settings = {
+          zls = {
+            enable_inlay_hints = true,
+            inlay_hints_show_builtin = true,
+            inlay_hints_exclude_single_argument = true,
+            inlay_hints_hide_redundant_param_names = false,
+            inlay_hints_hide_redundant_param_names_last_token = false,
+          },
+        },
       })
+      vim.lsp.enable('zls')
+      vim.lsp.enable('ocamllsp')
 
-      lspconfig.ocamllsp.setup({
+      vim.lsp.config('svelte', {
         capabilities = capabilities,
+        settings = {
+          typescript = {
+            inlayHints = {
+              parameterNames = { enabled = "all" },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = true },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enabled = true },
+              enumMemberValues = { enabled = true },
+            },
+          },
+        },
       })
-      lspconfig.svelte.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.templ.setup({
-        capabilities = capabilities,
-      })
+      vim.lsp.enable('svelte')
+
+      vim.lsp.enable('templ')
       vim.filetype.add({ extension = { templ = "templ" } })
 
-      lspconfig.tailwindcss.setup({
+      vim.lsp.config('tailwindcss', {
         capabilities = capabilities,
         filetypes = { "templ", "astro", "javascript", "typescript", "react" },
         init_options = { userLanguages = { templ = "html" } },
       })
+      vim.lsp.enable('tailwindcss')
 
-      lspconfig.emmet_ls.setup({
+      vim.lsp.config('emmet_ls', {
         capabilities = capabilities,
         filetypes = {
           "css",
@@ -155,12 +214,22 @@ return {
           },
         },
       })
+      vim.lsp.enable('emmet_ls')
 
-      lspconfig.gopls.setup({
-        capabilities = capabilities,
+      vim.lsp.config('gopls', {
+        -- capabilities = capabilities,
         cmd = { "gopls", "serve" },
         settings = {
           gopls = {
+            hints = {
+              rangeVariableTypes = true,
+              parameterNames = true,
+              constantValues = true,
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              functionTypeParameters = true,
+            },
             analyses = {
               unusedparams = true,
             },
@@ -169,62 +238,63 @@ return {
           },
         },
       })
+      vim.lsp.enable('gopls')
+      vim.lsp.enable('jsonls')
 
-      lspconfig.nim_langserver.setup({
-        capabilities = capabilities,
-        settings = {
-          nim = {
-            nimsuggestPath = "~/.nimble/bin/nimlangserver",
-          },
-        },
-      })
-
-      lspconfig.jsonls.setup({
-        capabilities = capabilities,
-      })
-      --
-      -- require("elixir").setup({
-      --   nextls = {enable = false},
-      --   credo = {enable = true},
-      --   elixirls = {enable = true},
-      -- })
-      --
-      -- local elixirlsp_cmd = "elixir_language_server.sh"
-      --
-      -- lspconfig.elixirls.setup({
-      --   cmd = { elixirlsp_cmd },
-      --   capabilities = capabilities,
-      --   settings = {
-      --     elixirLS = {
-      --       dialyzerEnabled = true,
-      --       fetchDeps = false,
-      --     },
-      --   },
-      -- })
-      --
-      --
-      lspconfig.lexical.setup({
-        capabilities = capabilities,
+      vim.lsp.config('lexical', {
+        cmd = { "/home/voloyev/w/elixir/lexical/_build/dev/package/lexical/bin/start_lexical.sh" },
         root_dir = function(fname)
           return lspconfig.util.root_pattern("mix.exs", ".git")(fname) or vim.loop.cwd()
         end,
         filetypes = { "elixir", "eelixir", "heex" },
-        -- optional settings
-        settings = {},
       })
+      vim.lsp.enable('lexical')
 
-      lspconfig.rust_analyzer.setup({
+      vim.lsp.config('rust_analyzer', {
         capabilities = capabilities,
         settings = {
           ["rust-analyzer"] = {
             diagnostics = {
               enable = false,
             },
+            inlayHints = {
+              bindingModeHints = {
+                enable = false,
+              },
+              chainingHints = {
+                enable = true,
+              },
+              closingBraceHints = {
+                enable = true,
+                minLines = 25,
+              },
+              closureReturnTypeHints = {
+                enable = "never",
+              },
+              lifetimeElisionHints = {
+                enable = "never",
+                useParameterNames = false,
+              },
+              maxLength = 25,
+              parameterHints = {
+                enable = true,
+              },
+              reborrowHints = {
+                enable = "never",
+              },
+              renderColons = true,
+              typeHints = {
+                enable = true,
+                hideClosureInitialization = false,
+                hideNamedConstructor = false,
+              },
+            },
           },
         },
       })
+      vim.lsp.enable('rust_analyzer')
 
-      lspconfig.lua_ls.setup({
+      vim.lsp.config('lua_ls', {
         capabilities = capabilities,
         on_init = function(client)
           if client.workspace_folders then
@@ -238,75 +308,30 @@ return {
             runtime = {
               version = "LuaJIT",
             },
-            -- Make the server aware of Neovim runtime files
             workspace = {
               checkThirdParty = false,
               library = {
                 vim.env.VIMRUNTIME,
-                -- Depending on the usage, you might want to add additional paths here.
-                -- "${3rd}/luv/library"
-                -- "${3rd}/busted/library",
               },
-              -- or pull in all of 'runtimepath'. NOTE: this is a lot slower and will cause issues when working on your own configuration (see https://github.com/neovim/nvim-lspconfig/issues/3189)
-              -- library = vim.api.nvim_get_runtime_file("", true)
             },
           })
         end,
         settings = {
-          Lua = {},
+          Lua = {
+            hint = {
+              enable = true, -- necessary
+            }
+          }
         },
       })
+      vim.lsp.enable('lua_ls')
+      vim.lsp.enable('yamlls')
 
-      lspconfig.yamlls.setup({
-        capabilities = capabilities,
+      vim.lsp.config('terraformls', {
+        filetypes = { "hcl", "terraform", "tf" },
       })
-
-      lspconfig.terraformls.setup({
-        capabilities = capabilities,
-      })
-
-      lspconfig.jinja_lsp.setup({
-        capabilities = capabilities,
-        init_options = {
-          templates = "/Users/Volodymyr_Yevtushenko/w/PELO/api/cms/templates",
-          backend = { "/Users/Volodymyr_Yevtushenko/w/PELO/api/" },
-          lang = "python",
-        },
-      })
-
-      lspconfig.harper_ls.setup({
-        settings = {
-          ["harper-ls"] = {
-            userDictPath = "",
-            fileDictPath = "",
-            linters = {
-              SpellCheck = true,
-              SpelledNumbers = false,
-              AnA = true,
-              SentenceCapitalization = true,
-              UnclosedQuotes = true,
-              WrongQuotes = false,
-              LongSentences = true,
-              RepeatedWords = true,
-              Spaces = true,
-              Matcher = true,
-              CorrectNumberSuffix = true,
-            },
-            codeActions = {
-              ForceStable = false,
-            },
-            markdown = {
-              IgnoreLinkTitle = false,
-            },
-            diagnosticSeverity = "hint",
-            isolateEnglish = false,
-          },
-        },
-      })
-
-      require("lspconfig").ols.setup({
-        capabilities = capabilities,
-      })
+      vim.lsp.enable('terraformls')
+      vim.lsp.enable('ols')
 
       vim.filetype.add({
         extension = {
