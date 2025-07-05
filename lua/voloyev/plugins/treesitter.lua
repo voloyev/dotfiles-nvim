@@ -1,5 +1,16 @@
 return {
-  "nvim-treesitter/nvim-treesitter-context",
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    config = function()
+      require("treesitter-context").setup({
+        enable = true,
+        max_lines = 0,         -- No limit
+        trim_scope = "outer",  -- Show the outer scope
+        min_window_height = 0, -- No minimum window height
+        mode = "cursor",       -- Show context at cursor position
+      })
+    end
+  },
   "nvim-treesitter/playground",
   "RRethy/nvim-treesitter-endwise",
   {
