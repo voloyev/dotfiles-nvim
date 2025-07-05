@@ -8,6 +8,7 @@ return {
           theme = "gruvbox_dark",
           section_separators = '',
           component_separators = '',
+          globalstatus = true,
         },
       })
     end

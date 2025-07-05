@@ -67,3 +67,6 @@ vim.opt.cursorline = true
 
 vim.opt.termguicolors = true
 vim.diagnostic.config({ virtual_text = false })
+vim.g.markdown_fenced_languages = {
+  "ts=typescript"
+}

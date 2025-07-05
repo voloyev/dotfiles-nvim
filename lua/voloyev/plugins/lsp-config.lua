@@ -44,7 +44,8 @@ return {
         formatters_by_ft = {
           lua = { "stylua" },
           python = { "isort", "black" },
-          javascript = { "prettier", "eslint" },
+          javascript = { "eslint", "prettier" },
+          typescript = { "eslint", "prettier" },
           ruby = { "rubocop" },
           go = { "gofmt" },
           hcl = { "packer_fmt" },
@@ -76,7 +77,6 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
       local telescope = require("telescope.builtin")
       local trouble = require("trouble")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -87,6 +87,8 @@ return {
       vim.lsp.enable('ansiblels')
       vim.lsp.enable('gleam')
       vim.lsp.enable('html')
+      vim.lsp.enable('gitlab_ci_ls')
+      vim.lsp.enable('gh_actions_ls')
       --
       -- lspconfig.pyright.setup({
       -- 	capabilities = capabilities,
@@ -118,34 +120,37 @@ return {
       })
       vim.lsp.enable('clangd')
 
-      vim.lsp.config('ts_ls', {
-        root_dir = lspconfig.util.root_pattern("package.json"),
-      })
+      -- vim.lsp.config('ts_ls', {
+      --   -- rootdir = lspconfig.util.root_pattern("package.json"),
+      --   filetypes = {
+      --     "javascript",
+      --     "typescript",
+      --     "vue",
+      --   },
+      -- })
       vim.lsp.enable('ts_ls')
 
-      vim.lsp.config('denols', {
-        capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-        settings = {
-          deno = {
-            inlayHints = {
-              parameterNames = { enabled = "all", suppressWhenArgumentMatchesName = true },
-              parameterTypes = { enabled = true },
-              variableTypes = { enabled = true, suppressWhenTypeMatchesName = true },
-              propertyDeclarationTypes = { enabled = true },
-              functionLikeReturnTypes = { enable = true },
-              enumMemberValues = { enabled = true },
-            },
-          }
-        }
-      })
-      vim.lsp.enable('denols')
+      -- vim.lsp.config('denols', {
+      --   capabilities = capabilities,
+      --   settings = {
+      --     deno = {
+      --       inlayHints = {
+      --         parameterNames = { enabled = "all", suppressWhenArgumentMatchesName = true },
+      --         parameterTypes = { enabled = true },
+      --         variableTypes = { enabled = true, suppressWhenTypeMatchesName = true },
+      --         propertyDeclarationTypes = { enabled = true },
+      --         functionLikeReturnTypes = { enable = true },
+      --         enumMemberValues = { enabled = true },
+      --       },
+      --     }
+      --   }
+      -- })
+      -- vim.lsp.enable('denols')
 
       vim.lsp.enable('solargraph')
       vim.lsp.enable('ruby_lsp')
 
       vim.lsp.config('zls', {
-        -- capabilities = capabilities,
         single_file_support = true,
         settings = {
           zls = {
@@ -181,14 +186,12 @@ return {
       vim.filetype.add({ extension = { templ = "templ" } })
 
       vim.lsp.config('tailwindcss', {
-        capabilities = capabilities,
         filetypes = { "templ", "astro", "javascript", "typescript", "react" },
         init_options = { userLanguages = { templ = "html" } },
       })
       vim.lsp.enable('tailwindcss')
 
       vim.lsp.config('emmet_ls', {
-        capabilities = capabilities,
         filetypes = {
           "css",
           "eruby",
@@ -240,11 +243,7 @@ return {
       vim.lsp.enable('jsonls')
 
       vim.lsp.config('lexical', {
-        cmd = { "/home/voloyev/w/elixir/lexical/_build/dev/package/lexical/bin/start_lexical.sh" },
-        root_dir = function(fname)
-          return lspconfig.util.root_pattern("mix.exs", ".git")(fname) or vim.loop.cwd()
-        end,
-        filetypes = { "elixir", "eelixir", "heex" },
+        cmd = { "start_lexical.sh" },
       })
       vim.lsp.enable('lexical')
 
@@ -293,7 +292,6 @@ return {
       vim.lsp.enable('rust_analyzer')
 
       vim.lsp.config('lua_ls', {
-        capabilities = capabilities,
         on_init = function(client)
           if client.workspace_folders then
             local path = client.workspace_folders[1].name
