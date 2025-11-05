@@ -8,22 +8,19 @@ return {
       vim.cmd("colorscheme gruvbox")
     end,
   },
-  "MunifTanjim/nui.nvim",
-  "tpope/vim-markdown",
-  "rust-lang/rust.vim",
-  "pangloss/vim-javascript",
-  "leafgarland/typescript-vim",
-  "mattn/emmet-vim",
-  "elixir-editors/vim-elixir",
-  "ollykel/v-vim",
-  "fatih/vim-go",
-  "cespare/vim-toml",
-  "zah/nim.vim",
-  "joerdav/templ.vim",
-  "rhysd/vim-crystal",
-  "mboughaba/i3config.vim",
-  "jmcantrell/vim-virtualenv",
-  "mg979/vim-visual-multi",
+  { "tpope/vim-markdown", ft = "markdown" },
+  { "rust-lang/rust.vim", ft = "rust" },
+  { "pangloss/vim-javascript", ft = "javascript" },
+  { "leafgarland/typescript-vim", ft = "typescript" },
+  { "mattn/emmet-vim", ft = { "html", "css", "javascriptreact", "typescriptreact" } },
+  { "elixir-editors/vim-elixir", ft = "elixir" },
+  { "fatih/vim-go", ft = "go" },
+  { "cespare/vim-toml", ft = "toml" },
+  { "joerdav/templ.vim", ft = "templ" },
+  { "rhysd/vim-crystal", ft = "crystal" },
+  { "mboughaba/i3config.vim", ft = "i3config" },
+  { "jmcantrell/vim-virtualenv", ft = "python" },
+  { "mg979/vim-visual-multi", event = "VeryLazy" },
   {
     "numToStr/Comment.nvim",
     config = function()
@@ -181,7 +178,9 @@ return {
       -- This is VERY helpful when reporting an issue with the project
       -- vim.g["conjure#debug"] = true
     end,
-
+    config = function()
+      require("conjure").setup()
+    end,
     -- Optional cmp-conjure integration
     dependencies = { "PaterJason/cmp-conjure" },
   },
@@ -213,6 +212,34 @@ return {
     end,
   },
   {
+    "NickvanDyke/opencode.nvim",
+    dependencies = {
+      -- Recommended for `ask()` and `select()`.
+      -- Required for default `toggle()` implementation.
+      { "folke/snacks.nvim", opts = { input = {}, picker = {}, terminal = {} } },
+    },
+    config = function()
+      ---@type opencode.Opts
+      vim.g.opencode_opts = {
+        -- Your configuration, if any — see `lua/opencode/config.lua`, or "goto definition".
+      }
+
+      -- Required for `opts.auto_reload`.
+      vim.o.autoread = true
+
+      -- Recommended/example keymaps.
+      vim.keymap.set({ "n", "x" }, "<C-a>", function() require("opencode").ask("@this: ", { submit = true }) end, { desc = "Ask opencode" })
+      vim.keymap.set({ "n", "x" }, "<C-x>", function() require("opencode").select() end,                          { desc = "Execute opencode action…" })
+      vim.keymap.set({ "n", "x" },    "ga", function() require("opencode").prompt("@this") end,                   { desc = "Add to opencode" })
+      vim.keymap.set({ "n", "t" }, "<C-.>", function() require("opencode").toggle() end,                          { desc = "Toggle opencode" })
+      vim.keymap.set("n",        "<S-C-u>", function() require("opencode").command("session.half.page.up") end,   { desc = "opencode half page up" })
+      vim.keymap.set("n",        "<S-C-d>", function() require("opencode").command("session.half.page.down") end, { desc = "opencode half page down" })
+      -- You may want these if you stick with the opinionated "<C-a>" and "<C-x>" above — otherwise consider "<leader>o".
+      vim.keymap.set('n', '+', '<C-a>', { desc = 'Increment', noremap = true })
+      vim.keymap.set('n', '-', '<C-x>', { desc = 'Decrement', noremap = true })
+    end,
+  },
+  {
     "johnfrankmorgan/whitespace.nvim",
     config = function()
       require("whitespace-nvim").setup({
@@ -235,7 +262,7 @@ return {
       })
 
       -- remove trailing whitespace with a keybinding
-      vim.keymap.set("n", "<Leader>t", require("whitespace-nvim").trim)
+      vim.keymap.set("n", "<Leader>tw", require("whitespace-nvim").trim)
     end,
   },
 }
