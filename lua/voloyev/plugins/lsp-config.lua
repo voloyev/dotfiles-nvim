@@ -89,10 +89,16 @@ return {
       vim.lsp.enable('html')
       vim.lsp.enable('gitlab_ci_ls')
       vim.lsp.enable('gh_actions_ls')
-      --
-      -- lspconfig.pyright.setup({
-      -- 	capabilities = capabilities,
-      -- })
+
+      vim.lsp.config('pyright', {
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('pyright')
+
+      vim.lsp.config('pyrefly', {
+        capabilities = capabilities,
+      })
+      vim.lsp.enable('pyrefly')
 
       vim.lsp.config('pylyzer', {
         settings = {
@@ -130,23 +136,22 @@ return {
       -- })
       vim.lsp.enable('ts_ls')
 
-      -- vim.lsp.config('denols', {
-      --   capabilities = capabilities,
-      --   settings = {
-      --     deno = {
-      --       inlayHints = {
-      --         parameterNames = { enabled = "all", suppressWhenArgumentMatchesName = true },
-      --         parameterTypes = { enabled = true },
-      --         variableTypes = { enabled = true, suppressWhenTypeMatchesName = true },
-      --         propertyDeclarationTypes = { enabled = true },
-      --         functionLikeReturnTypes = { enable = true },
-      --         enumMemberValues = { enabled = true },
-      --       },
-      --     }
-      --   }
-      -- })
-      -- vim.lsp.enable('denols')
-
+      vim.lsp.config('denols', {
+        capabilities = capabilities,
+        settings = {
+          deno = {
+            inlayHints = {
+              parameterNames = { enabled = "all", suppressWhenArgumentMatchesName = true },
+              parameterTypes = { enabled = true },
+              variableTypes = { enabled = true, suppressWhenTypeMatchesName = true },
+              propertyDeclarationTypes = { enabled = true },
+              functionLikeReturnTypes = { enable = true },
+              enumMemberValues = { enabled = true },
+            },
+          }
+        }
+      })
+      vim.lsp.enable('denols')
       vim.lsp.enable('solargraph')
       vim.lsp.enable('ruby_lsp')
 
@@ -242,11 +247,16 @@ return {
       vim.lsp.enable('gopls')
       vim.lsp.enable('jsonls')
 
-      vim.lsp.config('lexical', {
-        cmd = { "start_lexical.sh" },
+      -- vim.lsp.config('expert', {
+      --   capabilities = capabilities,
+      --   cmd = { "/home/voloyev/w/elixir/expert/apps/expert/burrito_out/expert_linux_amd64" },
+      -- })
+      -- vim.lsp.enable('expert')
+      vim.lsp.config('elixirls', {
+        cmd = { "/home/voloyev/w/elixir/elixir-ls/release/language_server.sh" },
       })
-      vim.lsp.enable('lexical')
 
+      vim.lsp.enable('elixirls')
       vim.lsp.config('rust_analyzer', {
         capabilities = capabilities,
         settings = {
@@ -322,6 +332,8 @@ return {
       })
       vim.lsp.enable('lua_ls')
       vim.lsp.enable('yamlls')
+      vim.lsp.enable('gitlab_ci_ls')
+      vim.lsp.enable('gh_actions_ls')
 
       vim.lsp.config('terraformls', {
         filetypes = { "hcl", "terraform", "tf" },

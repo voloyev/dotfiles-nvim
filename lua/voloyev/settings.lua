@@ -22,9 +22,9 @@ vim.opt.synmaxcol = 300 -- stop syntax highlight after x lines for performance
 vim.opt.laststatus = 2 -- always show status line
 
 vim.opt.list = false -- do not display white characters
-vim.opt.foldenable = false
-vim.opt.foldlevel = 4 -- limit folding to 4 levels
-vim.opt.foldmethod = "syntax" -- use language syntax to generate folds
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99 -- limit folding to 99 levels
+vim.opt.foldmethod = "indent" -- use indentation to generate folds
 vim.opt.wrap = false --do not wrap lines even if very long
 vim.opt.eol = false -- show if there's no eol char
 vim.opt.showbreak = "↪" -- character to show when line is broken
@@ -52,8 +52,6 @@ vim.opt.tabstop = 2      -- 1 tab = 2 spaces
 vim.opt.softtabstop = 2  -- 1 tab = 2 spaces
 vim.opt.shiftwidth = 2   -- indentation rule
 vim.opt.expandtab = true -- expand tab to spaces
-vim.opt.foldmethod = "indent"
-vim.opt.foldlevel = 99
 
 
 vim.opt.laststatus = 2

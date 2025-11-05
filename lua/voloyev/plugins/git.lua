@@ -63,15 +63,16 @@ return {
         "sindrets/diffview.nvim",        -- optional
         "ibhagwan/fzf-lua",              -- optional
       },
-      config = function ()
+      config = function()
         vim.keymap.set("n", "<Leader>gg", vim.cmd.Neogit)
       end
     },
     {
-      'f-person/git-blame.nvim',
+      "FabijanZulj/blame.nvim",
+      cmd = "BlameToggle",
       config = function()
-        require('gitblame').setup({})
-      end
+        require('blame').setup {}
+      end,
     },
     {
       "sindrets/diffview.nvim",
