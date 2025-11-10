@@ -65,6 +65,8 @@ vim.pack.add({
   { src = "https://github.com/NeogitOrg/neogit" },
   { src = "https://github.com/sindrets/diffview.nvim" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+  { src = "https://github.com/folke/persistence.nvim" },
+  { src = "https://github.com/nvim-pack/nvim-spectre" },
 })
 
 vim.cmd([[colorscheme gruvbox]])
@@ -84,6 +86,34 @@ require("telescope").setup({
   },
 })
 
+require('nvim-treesitter.configs').setup({
+  -- A list of parser names, or "all"
+  ensure_installed = {
+    "c", "ruby", "python", "elixir", "lua", "rust",
+    "lua", "haskell", "javascript", "typescript", "python",
+    "ocaml", "html", "svelte", "yaml", "gleam", "terraform",
+    "scheme", "clojure", "zig", "go", "hcl", "odin"
+  },
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+    enable = true,
+    additional_vim_regex_highlighting = false,
+  },
+  indent = { enable = true },
+  endwise = {
+    enable = true,
+  },
+})
+
+-- require("persistence").setup()
+require("spectre").setup({})
+vim.keymap.set("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+  desc = "Search current word",
+})
+vim.keymap.set("n", "<leader>sp", '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+  desc = "Search on current file",
+})
 local builtin = require("telescope.builtin")
 vim.keymap.set("n", "<C-p>", builtin.git_files)
 vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Telescope find files' })
@@ -94,8 +124,13 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help ta
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 vim.keymap.set("n", "<leader>o", ":update<CR> :source<CR>")
 vim.keymap.set("n", "<leader>w", ":write<CR>")
-vim.keymap.set("n", "<leader>q", ":quit<CR>")
+vim.keymap.set("n", "<leader>qq", ":quitall<CR>")
 vim.keymap.set("n", "<Leader>gg", vim.cmd.Neogit)
+
+vim.keymap.set("n", "<leader>qs", function() require("persistence").load() end)
+vim.keymap.set("n", "<leader>qS", function() require("persistence").select() end)
+vim.keymap.set("n", "<leader>ql", function() require("persistence").load({ last = true }) end)
+vim.keymap.set("n", "<leader>qd", function() require("persistence").stop() end)
 
 -- Lsp keys
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration)
@@ -108,7 +143,7 @@ vim.keymap.set("n", "<leader>ww", vim.diagnostic.open_float)
 vim.keymap.set("n", "<leader>wl", function()
   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 end)
--- vim.keymap.set("n", "<leader>D", telescope.lsp_type_definitions, bufopts)
+vim.keymap.set("n", "<leader>D", builtin.lsp_type_definitions)
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
 vim.keymap.set({ "v", "n" }, "<leader>ca", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>f", function()
@@ -117,6 +152,16 @@ end)
 
 
 vim.lsp.inlay_hint.enable(true, { 0 })
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    if client:supports_method("textDocument/completion") then
+      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+    end
+  end
+})
+
 vim.lsp.config("ansiblels", {
   filetypes = { "yml", "yaml" },
 })
@@ -370,25 +415,5 @@ vim.filetype.add({
     jinja2 = "jinja",
     j2 = "jinja",
     html = "jinja",
-  },
-})
-
-require('nvim-treesitter.configs').setup({
-  -- A list of parser names, or "all"
-  ensure_installed = {
-    "c", "ruby", "python", "elixir", "lua", "rust",
-    "lua", "haskell", "javascript", "typescript", "python",
-    "ocaml", "html", "svelte", "yaml", "gleam", "terraform",
-    "scheme", "clojure", "zig", "go", "hcl", "odin"
-  },
-  sync_install = false,
-  auto_install = true,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  indent = { enable = true },
-  endwise = {
-    enable = true,
   },
 })

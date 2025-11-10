@@ -20,6 +20,10 @@
       "rev": "2010fc6",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
+    "nvim-spectre": {
+      "rev": "72f56f7",
+      "src": "https://github.com/nvim-pack/nvim-spectre"
+    },
     "nvim-treesitter": {
       "rev": "42fc28ba",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
@@ -27,6 +31,10 @@
     "oil.nvim": {
       "rev": "7e1cd77",
       "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "persistence.nvim": {
+      "rev": "b20b2a7",
+      "src": "https://github.com/folke/persistence.nvim"
     },
     "plenary.nvim": {
       "rev": "b9fd522",
