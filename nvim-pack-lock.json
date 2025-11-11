@@ -1,24 +1,88 @@
 {
   "plugins": {
+    "blame.nvim": {
+      "rev": "f3f6153",
+      "src": "https://github.com/FabijanZulj/blame.nvim"
+    },
+    "cmp-buffer": {
+      "rev": "b74fab3",
+      "src": "https://github.com/hrsh7th/cmp-buffer"
+    },
+    "cmp-cmdline": {
+      "rev": "d126061",
+      "src": "https://github.com/hrsh7th/cmp-cmdline"
+    },
+    "cmp-nvim-lsp": {
+      "rev": "bd5a7d6",
+      "src": "https://github.com/hrsh7th/cmp-nvim-lsp"
+    },
+    "cmp-path": {
+      "rev": "c642487",
+      "src": "https://github.com/hrsh7th/cmp-path"
+    },
+    "cmp-snippy": {
+      "rev": "6e39210",
+      "src": "https://github.com/dcampos/cmp-snippy"
+    },
     "diffview.nvim": {
       "rev": "4516612",
       "src": "https://github.com/sindrets/diffview.nvim"
+    },
+    "gitsigns.nvim": {
+      "rev": "20ad441",
+      "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "grug-far.nvim": {
+      "rev": "b58b2d6",
+      "src": "https://github.com/MagicDuck/grug-far.nvim"
     },
     "gruvbox.nvim": {
       "rev": "5e0a460",
       "src": "https://github.com/ellisonleao/gruvbox.nvim"
     },
+    "harpoon": {
+      "rev": "1bc17e3",
+      "src": "https://github.com/ThePrimeagen/harpoon"
+    },
+    "indent-blankline.nvim": {
+      "rev": "005b560",
+      "src": "https://github.com/lukas-reineke/indent-blankline.nvim"
+    },
+    "lualine.nvim": {
+      "rev": "3946f01",
+      "src": "https://github.com/nvim-lualine/lualine.nvim"
+    },
+    "mini.diff": {
+      "rev": "fbb93ea",
+      "src": "https://github.com/nvim-mini/mini.diff"
+    },
     "mini.pick": {
       "rev": "08a7220",
       "src": "https://github.com/nvim-mini/mini.pick"
+    },
+    "mini.surround": {
+      "rev": "88c5229",
+      "src": "https://github.com/nvim-mini/mini.surround"
     },
     "neogit": {
       "rev": "2cc5daff",
       "src": "https://github.com/NeogitOrg/neogit"
     },
+    "nvim-autopairs": {
+      "rev": "7a2c97c",
+      "src": "https://github.com/windwp/nvim-autopairs"
+    },
+    "nvim-cmp": {
+      "rev": "106c4bc",
+      "src": "https://github.com/hrsh7th/nvim-cmp"
+    },
     "nvim-lspconfig": {
       "rev": "2010fc6",
       "src": "https://github.com/neovim/nvim-lspconfig"
+    },
+    "nvim-snippy": {
+      "rev": "504ab14",
+      "src": "https://github.com/dcampos/nvim-snippy"
     },
     "nvim-spectre": {
       "rev": "72f56f7",
@@ -40,9 +104,21 @@
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "simple-zoom.nvim": {
+      "rev": "318aef7",
+      "src": "https://github.com/fasterius/simple-zoom.nvim"
+    },
     "telescope.nvim": {
       "rev": "0294ae3",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
+    },
+    "todo-comments.nvim": {
+      "rev": "31e3c38",
+      "src": "https://github.com/folke/todo-comments.nvim"
+    },
+    "trouble.nvim": {
+      "rev": "bd67efe",
+      "src": "https://github.com/folke/trouble.nvim"
     }
   }
 }
