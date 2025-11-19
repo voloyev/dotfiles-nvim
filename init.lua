@@ -140,7 +140,12 @@ vim.pack.add({
 
 vim.cmd([[colorscheme gruvbox]])
 
-require("oil").setup()
+require("oil").setup({
+  default_file_explorer = true,
+  view_options = {
+    show_hidden = true,
+  },
+})
 
 require("telescope").setup({
   pickers = {
@@ -175,7 +180,7 @@ require('nvim-treesitter.configs').setup({
   },
 })
 
--- require("persistence").setup()
+require("persistence").setup()
 require("spectre").setup({})
 vim.keymap.set("v", "<leader>sw", '<esc><cmd>lua require("spectre").open_visual()<CR>', {
   desc = "Search current word",
@@ -242,7 +247,6 @@ cmp.setup({
     end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
-    { name = "copilot" },
     { name = "nvim_lsp" },
     { name = "snippy" },
     { name = "buffer" },
@@ -340,20 +344,7 @@ require('gitsigns').setup {
       end
     end)
 
-    -- Actions
-    map('n', '<leader>hs', gitsigns.stage_hunk)
-    map('n', '<leader>hr', gitsigns.reset_hunk)
 
-    map('v', '<leader>hs', function()
-      gitsigns.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-    end)
-
-    map('v', '<leader>hr', function()
-      gitsigns.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') })
-    end)
-
-    map('n', '<leader>hS', gitsigns.stage_buffer)
-    map('n', '<leader>hR', gitsigns.reset_buffer)
     map('n', '<leader>hp', gitsigns.preview_hunk)
     map('n', '<leader>hi', gitsigns.preview_hunk_inline)
 
@@ -362,7 +353,6 @@ require('gitsigns').setup {
     end)
 
     map('n', '<leader>hd', gitsigns.diffthis)
-
     map('n', '<leader>hD', function()
       gitsigns.diffthis('~')
     end)
@@ -374,8 +364,6 @@ require('gitsigns').setup {
     map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
     map('n', '<leader>tw', gitsigns.toggle_word_diff)
 
-    -- Text object
-    map({ 'o', 'x' }, 'ih', gitsigns.select_hunk)
   end
 }
 
@@ -413,18 +401,16 @@ vim.keymap.set({ "v", "n" }, "<leader>ca", vim.lsp.buf.code_action)
 vim.keymap.set("n", "<leader>f", function()
   vim.lsp.buf.format({ async = true })
 end)
+vim.keymap.set("n", "<leader>io", function()
+  vim.lsp.buf.code_action({
+    context = { only = { "source.organizeImports" } },
+    apply = true,
+  })
+end, { desc = "Organize imports" })
 
 
 vim.lsp.inlay_hint.enable(true, { 0 })
 
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(event)
-    local client = vim.lsp.get_client_by_id(event.data.client_id)
-    if client:supports_method("textDocument/completion") then
-      vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
-    end
-  end
-})
 vim.cmd("set completeopt+=noselect")
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -436,16 +422,31 @@ vim.lsp.enable('gleam')
 vim.lsp.enable('html')
 vim.lsp.enable('gitlab_ci_ls')
 vim.lsp.enable('gh_actions_ls')
-vim.lsp.enable('pyright')
-vim.lsp.enable('pyrefly')
-vim.lsp.config('pylyzer', {
-  settings = {
-    python = {
-      inlayHints = true,
-    },
-  },
+-- ty: Fast type checker written in Rust by Astral (same team as Ruff)
+vim.lsp.config('ty', {
+  capabilities = capabilities,
 })
-vim.lsp.enable('pylyzer')
+vim.lsp.enable('ty')
+
+-- Ruff: Fast linter and formatter
+vim.lsp.config('ruff', {
+  capabilities = capabilities,
+  init_options = {
+    settings = {
+      lineLength = 88,
+      format = {
+        preview = true,
+      },
+      -- Enable import sorting
+      organizeImports = true,
+      fixAll = true,
+    }
+  },
+  on_attach = function(client, bufnr)
+    -- Disable hover in favor of ty
+    client.server_capabilities.hoverProvider = false
+  end,
+})
 vim.lsp.enable('ruff')
 
 vim.lsp.config('clangd', {
