@@ -119,6 +119,14 @@
     "trouble.nvim": {
       "rev": "bd67efe",
       "src": "https://github.com/folke/trouble.nvim"
+    },
+    "undotree": {
+      "rev": "3976ed63d7fb0cc47f6a778e230a390a399df69c",
+      "src": "https://github.com/jiaoshijie/undotree"
+    },
+    "zen-mode.nvim": {
+      "rev": "8564ce6d29ec7554eb9df578efa882d33b3c23a7",
+      "src": "https://github.com/folke/zen-mode.nvim"
     }
   }
 }

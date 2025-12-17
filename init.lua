@@ -132,10 +132,11 @@ vim.pack.add({
   { src = "https://github.com/folke/todo-comments.nvim" },
   { src = "https://github.com/ThePrimeagen/harpoon" },
   { src = "https://github.com/FabijanZulj/blame.nvim" },
-  { src = "https://github.com/fasterius/simple-zoom.nvim" },
   { src = "https://github.com/MagicDuck/grug-far.nvim" },
   { src = "https://github.com/nvim-lualine/lualine.nvim" },
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
+  { src = "https://github.com/jiaoshijie/undotree" },
+  { src = "https://github.com/folke/zen-mode.nvim" },
 })
 
 vim.cmd([[colorscheme gruvbox]])
@@ -166,7 +167,7 @@ require('nvim-treesitter.configs').setup({
     "c", "ruby", "python", "elixir", "lua", "rust",
     "lua", "haskell", "javascript", "typescript", "python",
     "ocaml", "html", "svelte", "yaml", "gleam", "terraform",
-    "scheme", "clojure", "zig", "go", "hcl", "odin"
+    "scheme", "clojure", "zig", "go", "hcl", "odin", "toml"
   },
   sync_install = false,
   auto_install = true,
@@ -194,9 +195,15 @@ require('mini.surround').setup()
 require("ibl").setup()
 require('blame').setup({})
 
-local simple_zoom = require("simple-zoom")
-vim.keymap.set("n", "<leader>z", simple_zoom.toggle_zoom)
-
+local zenmode = require("zen-mode")
+zenmode.setup({})
+vim.keymap.set("n", "<leader>z", function()
+  zenmode.toggle({
+    window = {
+      width = .85 -- width will be 85% of the editor width
+    }
+  })
+end)
 
 local cmp = require("cmp")
 local snippy = require("snippy")
@@ -363,7 +370,6 @@ require('gitsigns').setup {
     -- Toggles
     map('n', '<leader>tb', gitsigns.toggle_current_line_blame)
     map('n', '<leader>tw', gitsigns.toggle_word_diff)
-
   end
 }
 
@@ -695,3 +701,5 @@ vim.filetype.add({
     html = "jinja",
   },
 })
+
+vim.lsp.enable("clojure_lsp")
