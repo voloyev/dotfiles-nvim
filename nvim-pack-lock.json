@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "99": {
+      "rev": "4930a926a4409d6b961ecdaf0cea46e0358bc2bd",
+      "src": "https://github.com/ThePrimeagen/99"
+    },
     "blame.nvim": {
       "rev": "f3f6153",
       "src": "https://github.com/FabijanZulj/blame.nvim"
