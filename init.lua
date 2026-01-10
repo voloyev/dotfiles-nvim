@@ -138,6 +138,7 @@ vim.pack.add({
   { src = "https://github.com/jiaoshijie/undotree" },
   { src = "https://github.com/folke/zen-mode.nvim" },
   { src = "https://github.com/ThePrimeagen/99" },
+  { src = "https://github.com/folke/todo-comments.nvim" },
 })
 
 vim.cmd([[colorscheme gruvbox]])
@@ -779,3 +780,7 @@ end)
 vim.keymap.set("v", "<leader>9s", function()
   _99.stop_all_requests()
 end)
+
+local todo_comments = require("todo-comments")
+todo_comments.setup({})
+
