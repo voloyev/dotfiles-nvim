@@ -717,8 +717,11 @@ vim.lsp.enable('terraformls')
 
 vim.lsp.config('ols', {
   capabilities = capabilities,
-  settings = {
-    enable_inlay_hints = true,
+  init_options = {
+    enable_inlay_hints_params = true,
+    enable_inlay_hints_default_params = true,
+    enable_inlay_hints_implicit_return = true
+
   },
 })
 vim.lsp.enable('ols')
@@ -783,4 +786,3 @@ end)
 
 local todo_comments = require("todo-comments")
 todo_comments.setup({})
-
