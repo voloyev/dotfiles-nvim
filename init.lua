@@ -137,7 +137,8 @@ vim.pack.add({
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
   { src = "https://github.com/jiaoshijie/undotree" },
   { src = "https://github.com/folke/zen-mode.nvim" },
-  { src = "https://github.com/ThePrimeagen/99" },
+  -- { src = "https://github.com/ThePrimeagen/99" },
+  { src = "https://github.com/voloyev/99" },
   { src = "https://github.com/folke/todo-comments.nvim" },
 })
 
