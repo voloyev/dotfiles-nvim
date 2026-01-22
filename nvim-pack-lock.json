@@ -1,8 +1,8 @@
 {
   "plugins": {
     "99": {
-      "rev": "4930a926a4409d6b961ecdaf0cea46e0358bc2bd",
-      "src": "https://github.com/ThePrimeagen/99"
+      "rev": "de0c0b7045d00a945d01d8f3e1ee09c3e6a12bd3",
+      "src": "https://github.com/voloyev/99"
     },
     "blame.nvim": {
       "rev": "f3f6153",
@@ -71,6 +71,10 @@
     "neogit": {
       "rev": "2cc5daff",
       "src": "https://github.com/NeogitOrg/neogit"
+    },
+    "nvim": {
+      "rev": "beaf41a30c26fd7d6c386d383155cbd65dd554cd",
+      "src": "https://github.com/catppuccin/nvim"
     },
     "nvim-autopairs": {
       "rev": "7a2c97c",
