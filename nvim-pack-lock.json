@@ -2,7 +2,7 @@
   "plugins": {
     "99": {
       "rev": "de0c0b7045d00a945d01d8f3e1ee09c3e6a12bd3",
-      "src": "https://github.com/voloyev/99"
+      "src": "https://github.com/ThePrimeagen/99"
     },
     "blame.nvim": {
       "rev": "f3f6153",
@@ -31,6 +31,10 @@
     "diffview.nvim": {
       "rev": "4516612",
       "src": "https://github.com/sindrets/diffview.nvim"
+    },
+    "fff.nvim": {
+      "rev": "ea1f9802d7879345f02bef72bcadecd7252b8add",
+      "src": "https://github.com/dmtrKovalenko/fff.nvim"
     },
     "gitsigns.nvim": {
       "rev": "20ad441",
@@ -111,6 +115,10 @@
     "plenary.nvim": {
       "rev": "b9fd522",
       "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "quicker.nvim": {
+      "rev": "063cc44da1eef8681bbd653b29d3bc961780886a",
+      "src": "https://github.com/stevearc/quicker.nvim"
     },
     "simple-zoom.nvim": {
       "rev": "318aef7",

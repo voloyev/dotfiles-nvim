@@ -137,10 +137,13 @@ vim.pack.add({
   { src = "https://github.com/lewis6991/gitsigns.nvim" },
   { src = "https://github.com/jiaoshijie/undotree" },
   { src = "https://github.com/folke/zen-mode.nvim" },
-  -- { src = "https://github.com/ThePrimeagen/99" },
-  { src = "https://github.com/voloyev/99" },
+  { src = "https://github.com/ThePrimeagen/99" },
+  -- { src = "https://github.com/voloyev/99" },
   { src = "https://github.com/folke/todo-comments.nvim" },
+  { src = "https://github.com/stevearc/quicker.nvim" },
+  { src = 'https://github.com/dmtrKovalenko/fff.nvim' },
 })
+
 
 vim.cmd([[colorscheme gruvbox]])
 
@@ -416,8 +419,8 @@ vim.keymap.set("n", "<leader>o", ":update<CR> :source<CR>")
 vim.keymap.set("n", "<leader>qq", ":quitall<CR>")
 vim.keymap.set("n", "<Leader>gg", vim.cmd.Neogit)
 
-vim.keymap.set("n", "<leader>qs", function() require("persistence").load() end)
-vim.keymap.set("n", "<leader>qS", function() require("persistence").select() end)
+vim.keymap.set("n", "<leader>Qs", function() require("persistence").load() end)
+vim.keymap.set("n", "<leader>QS", function() require("persistence").select() end)
 vim.keymap.set("n", "<leader>ql", function() require("persistence").load({ last = true }) end)
 vim.keymap.set("n", "<leader>qd", function() require("persistence").stop() end)
 
@@ -737,7 +740,7 @@ vim.filetype.add({
 })
 
 vim.lsp.enable("clojure_lsp")
-
+vim.lsp.enable('dartls')
 local _99 = require("99")
 
 -- For logging that is to a file if you wish to trace through requests
@@ -787,3 +790,88 @@ end)
 
 local todo_comments = require("todo-comments")
 todo_comments.setup({})
+
+vim.keymap.set("n", "<leader>q", function()
+  require("quicker").toggle()
+end, {
+  desc = "Toggle quickfix",
+})
+vim.keymap.set("n", "<leader>l", function()
+  require("quicker").toggle({ loclist = true })
+end, {
+  desc = "Toggle loclist",
+})
+require("quicker").setup({
+  keys = {
+    {
+      ">",
+      function()
+        require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+      end,
+      desc = "Expand quickfix context",
+    },
+    {
+      "<",
+      function()
+        require("quicker").collapse()
+      end,
+      desc = "Collapse quickfix context",
+    },
+  },
+})
+
+
+vim.api.nvim_create_autocmd('PackChanged', {
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+    if name == 'fff.nvim' and (kind == 'install' or kind == 'update') then
+      if not ev.data.active then
+        vim.cmd.packadd('fff.nvim')
+      end
+      require('fff.download').download_or_build_binary()
+    end
+  end,
+})
+
+-- the plugin will automatically lazy load
+vim.g.fff = {
+  lazy_sync = true, -- start syncing only when the picker is open
+  debug = {
+    enabled = true,
+    show_scores = true,
+  },
+}
+
+vim.keymap.set(
+  'n',
+  'ff',
+  function() require('fff').find_files() end,
+  { desc = 'FFFind files' }
+)
+
+vim.keymap.set(
+  'n',
+  "fg",
+  function() require('fff').live_grep() end,
+  { desc = 'LiFFFe grep' }
+)
+
+vim.keymap.set(
+  'n',
+  "fz",
+  function()
+    require('fff').live_grep({
+      grep = {
+        modes = { 'fuzzy', 'plain' }
+      }
+    })
+  end,
+  { desc = 'Live fffuzy grep' }
+)
+
+vim.keymap.set(
+  'n',
+  "fc",
+  function() require('fff').live_grep({ query = vim.fn.expand("<cword>") }) end,
+  { desc = 'Search current word' }
+)
