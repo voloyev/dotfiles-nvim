@@ -629,11 +629,14 @@ vim.lsp.config('gopls', {
 })
 vim.lsp.enable('gopls')
 vim.lsp.enable('jsonls')
-vim.lsp.config('elixirls', {
-  cmd = { "/home/voloyev/w/elixir/elixir-ls/release/language_server.sh" },
-})
 
-vim.lsp.enable('elixirls')
+vim.lsp.config('expert', {
+  cmd = { 'expert', '--stdio' },
+  root_markers = { 'mix.exs', '.git' },
+  filetypes = { 'elixir', 'eelixir', 'heex' },
+})
+vim.lsp.enable 'expert'
+
 vim.lsp.config('rust_analyzer', {
   capabilities = capabilities,
   settings = {
