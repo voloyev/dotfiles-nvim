@@ -116,7 +116,7 @@ vim.pack.add({
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/NeogitOrg/neogit" },
   { src = "https://github.com/sindrets/diffview.nvim" },
-  { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+  { src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
   { src = "https://github.com/folke/persistence.nvim" },
   { src = "https://github.com/nvim-pack/nvim-spectre" },
   { src = "https://github.com/dcampos/nvim-snippy" },
@@ -167,24 +167,19 @@ require("telescope").setup({
   },
 })
 
-require('nvim-treesitter.configs').setup({
-  -- A list of parser names, or "all"
-  ensure_installed = {
-    "c", "ruby", "python", "elixir", "lua", "rust",
-    "lua", "haskell", "javascript", "typescript", "python",
-    "ocaml", "html", "svelte", "yaml", "gleam", "terraform",
-    "scheme", "clojure", "zig", "go", "hcl", "odin", "toml"
-  },
-  sync_install = false,
-  auto_install = true,
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  indent = { enable = true },
-  endwise = {
-    enable = true,
-  },
+require("nvim-treesitter").install({
+  "c", "ruby", "python", "elixir", "lua", "rust",
+  "lua", "haskell", "javascript", "typescript", "python",
+  "ocaml", "html", "svelte", "yaml", "gleam", "terraform",
+  "scheme", "clojure", "zig", "go", "hcl", "odin", "toml", "gitcommit",
+  "vim", "vimdoc", "query", "markdown", "markdown_inline",
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
 })
 
 require("persistence").setup()
