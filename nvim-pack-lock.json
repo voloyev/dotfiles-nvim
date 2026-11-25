@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "99": {
-      "rev": "de0c0b7045d00a945d01d8f3e1ee09c3e6a12bd3",
-      "src": "https://github.com/ThePrimeagen/99"
-    },
     "blame.nvim": {
       "rev": "f3f6153",
       "src": "https://github.com/FabijanZulj/blame.nvim"
@@ -60,14 +56,6 @@
       "rev": "3946f01",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
-    "mini.diff": {
-      "rev": "fbb93ea",
-      "src": "https://github.com/nvim-mini/mini.diff"
-    },
-    "mini.pick": {
-      "rev": "08a7220",
-      "src": "https://github.com/nvim-mini/mini.pick"
-    },
     "mini.surround": {
       "rev": "88c5229",
       "src": "https://github.com/nvim-mini/mini.surround"
@@ -75,10 +63,6 @@
     "neogit": {
       "rev": "2cc5daff",
       "src": "https://github.com/NeogitOrg/neogit"
-    },
-    "nvim": {
-      "rev": "beaf41a30c26fd7d6c386d383155cbd65dd554cd",
-      "src": "https://github.com/catppuccin/nvim"
     },
     "nvim-autopairs": {
       "rev": "7a2c97c",
@@ -121,9 +105,9 @@
       "rev": "063cc44da1eef8681bbd653b29d3bc961780886a",
       "src": "https://github.com/stevearc/quicker.nvim"
     },
-    "simple-zoom.nvim": {
-      "rev": "318aef7",
-      "src": "https://github.com/fasterius/simple-zoom.nvim"
+    "rose-pine": {
+      "rev": "ff483051a47e27d84bdef47703538df1ed9f4a47",
+      "src": "https://github.com/rose-pine/neovim"
     },
     "telescope.nvim": {
       "rev": "0294ae3",
@@ -132,10 +116,6 @@
     "todo-comments.nvim": {
       "rev": "31e3c38",
       "src": "https://github.com/folke/todo-comments.nvim"
-    },
-    "trouble.nvim": {
-      "rev": "bd67efe",
-      "src": "https://github.com/folke/trouble.nvim"
     },
     "undotree": {
       "rev": "3976ed63d7fb0cc47f6a778e230a390a399df69c",
